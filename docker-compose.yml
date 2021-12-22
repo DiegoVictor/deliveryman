@@ -1,0 +1,21 @@
+version: "3.9"
+services:
+  postgres:
+    image: postgres
+    container_name: pg
+    restart: always
+    ports:
+      - 5432:5432
+    environment:
+      POSTGRES_PASSWORD: docker
+      POSTGRES_DB: deliveryman
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    networks:
+      - app_network
+volumes:
+  pgdata:
+    driver: local
+networks:
+  app_network:
+    driver: bridge
