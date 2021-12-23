@@ -9,3 +9,34 @@ datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
 }
+
+model Deliveryman {
+  id       String @id @default(uuid())
+  username String @unique
+  password String
+
+  @@map("deliveryman")
+  Deliveries Deliveries[]
+}
+
+model Clients {
+  id       String @id @default(uuid())
+  username String @unique
+  password String
+
+  @@map("clients")
+  Deliveries Deliveries[]
+}
+
+model Deliveries {
+  id             String      @id @default(uuid())
+  client_id      String
+  client         Clients     @relation(fields: [client_id], references: [id])
+  deliveryman_id String
+  deliveryman    Deliveryman @relation(fields: [deliveryman_id], references: [id])
+  product_name   String
+  delivered_at   DateTime    @default(now())
+  created_at     DateTime    @default(now())
+
+  @@map("deliveries")
+}
