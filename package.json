@@ -1,4 +1,5 @@
 {
+  "license": "MIT",
   "scripts": {
     "dev:server": "ts-node-dev --exit-child --transpile-only --ignore-watch node_modules src/server.ts"
   },
