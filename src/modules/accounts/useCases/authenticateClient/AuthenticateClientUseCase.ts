@@ -1,6 +1,7 @@
-import { compare } from "bcrypt";
-import { sign } from "jsonwebtoken";
-import { prisma } from "../../../database/prisma";
+import { compare } from 'bcrypt';
+import { sign } from 'jsonwebtoken';
+
+import { prisma } from '../../../../database/prisma';
 
 interface IClient {
   username: string;
@@ -16,11 +17,11 @@ export class AuthenticateClientUseCase {
     });
 
     if (!client) {
-      throw new Error("Username or password incorrect");
+      throw new Error('Username or password incorrect');
     }
 
     if (await compare(password, client.password)) {
-      const token = sign({ username }, String(process.env.JWT_SECRET), {
+      const token = sign({ username }, String(process.env.JWT_CLIENT_SECRET), {
         subject: client.id,
         expiresIn: process.env.JWT_EXPIRATION,
       });
@@ -28,6 +29,6 @@ export class AuthenticateClientUseCase {
       return token;
     }
 
-    throw new Error("Username or password incorrect");
+    throw new Error('Username or password incorrect');
   }
 }
