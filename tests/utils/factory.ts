@@ -7,4 +7,13 @@ export interface Person {
   password: string;
 }
 
+factory.define<Person>(
+  'Person',
+  {},
+  {
+    username: faker.internet.userName,
+    password: faker.internet.password,
+  }
+);
+
 export default factory;
