@@ -5,7 +5,13 @@ jobs:
   build:
     docker:
       - image: circleci/node:16
+      - image: circleci/postgres:11.8
+        environment:
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: docker
+          POSTGRES_DB: test
     steps:
+      - run: dockerize -wait tcp://localhost:5432 -timeout 1m
       - checkout
       - run: npm install
       - run: npm run test
