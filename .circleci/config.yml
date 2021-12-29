@@ -14,6 +14,7 @@ jobs:
       - run: dockerize -wait tcp://localhost:5432 -timeout 1m
       - checkout
       - run: npm install
+      - run: npx prisma migrate deploy
       - run: npm run test
       - codecov/upload:
           file: tests/coverage/*.json
