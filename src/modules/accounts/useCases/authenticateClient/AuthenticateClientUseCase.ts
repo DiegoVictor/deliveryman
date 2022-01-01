@@ -2,14 +2,10 @@ import { compare } from 'bcrypt';
 import { sign } from 'jsonwebtoken';
 
 import { prisma } from '../../../../database/prisma';
-
-interface IClient {
-  username: string;
-  password: string;
-}
+import { IAccount } from '../../models/IAccount';
 
 export class AuthenticateClientUseCase {
-  async execute({ username, password }: IClient) {
+  async execute({ username, password }: IAccount) {
     const client = await prisma.clients.findFirst({
       where: {
         username,

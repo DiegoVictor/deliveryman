@@ -1,14 +1,10 @@
 import { hash } from 'bcrypt';
 
 import { prisma } from '../../../../database/prisma';
-
-interface IClient {
-  username: string;
-  password: string;
-}
+import { IAccount } from '../../../accounts/models/IAccount';
 
 export class CreateClientUseCase {
-  async execute({ username, password }: IClient) {
+  async execute({ username, password }: IAccount) {
     const client = await prisma.clients.findFirst({
       where: {
         username: {
