@@ -1,14 +1,10 @@
 import faker from 'faker';
 import factory from 'factory-girl';
 
-export interface Person {
-  id?: string;
-  username: string;
-  password: string;
-}
+import { IAccount } from '../../src/modules/accounts/models/IAccount';
 
-factory.define<Person>(
-  'Person',
+factory.define<IAccount>(
+  'Account',
   {},
   {
     username: faker.internet.userName,
