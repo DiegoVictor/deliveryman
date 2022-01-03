@@ -1,11 +1,12 @@
 import { compare } from 'bcrypt';
 
-import factory, { Person } from '../../utils/factory';
+import factory from '../../utils/factory';
+import { IAccount } from '../../../src/modules/accounts/models/IAccount';
 import { CreateClientUseCase } from '../../../src/modules/clients/useCases/createClient/CreateClientUseCase';
 
 describe('CreateClientUseCase', () => {
   it('should be able to create a new client', async () => {
-    const client = await factory.attrs<Person>('Person');
+    const client = await factory.attrs<IAccount>('Account');
 
     const createClientUseCase = new CreateClientUseCase();
     const response = await createClientUseCase.execute(client);
@@ -16,7 +17,7 @@ describe('CreateClientUseCase', () => {
   });
 
   it('should not be able to create a new client', async () => {
-    const client = await factory.attrs<Person>('Person');
+    const client = await factory.attrs<IAccount>('Account');
 
     const createClientUseCase = new CreateClientUseCase();
 

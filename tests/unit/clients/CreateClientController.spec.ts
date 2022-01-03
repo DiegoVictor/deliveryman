@@ -2,17 +2,18 @@ import { getMockReq, getMockRes } from '@jest-mock/express';
 import { hash } from 'bcrypt';
 import { randomUUID } from 'crypto';
 
-import factory, { Person } from '../../utils/factory';
+import factory from '../../utils/factory';
+import { IAccount } from '../../../src/modules/accounts/models/IAccount';
 import { CreateClientController } from '../../../src/modules/clients/useCases/createClient/CreateClientController';
 
-const execute = jest.fn(async (_: Person) => ({}));
+const execute = jest.fn(async (_: IAccount) => ({}));
 jest.mock(
   '../../../src/modules/clients/useCases/createClient/CreateClientUseCase',
   () => {
     return {
       CreateClientUseCase: function UseCase() {
         return {
-          execute: async (client: Person) => execute(client),
+          execute: async (client: IAccount) => execute(client),
         };
       },
     };
@@ -21,7 +22,7 @@ jest.mock(
 
 describe('CreateClientController', () => {
   it('should be able to create a new client', async () => {
-    const client = await factory.attrs<Person>('Person');
+    const client = await factory.attrs<IAccount>('Account');
     const request = getMockReq({ body: client });
 
     const { res: response } = getMockRes();
