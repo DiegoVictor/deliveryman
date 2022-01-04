@@ -2,7 +2,7 @@ import { compare } from 'bcrypt';
 import { sign } from 'jsonwebtoken';
 
 import { prisma } from '../../../../database/prisma';
-import { IAccount } from '../../models/IAccount';
+import { IAccount } from '../../contracts/IAccount';
 
 export class AuthenticateClientUseCase {
   async execute({ username, password }: IAccount) {

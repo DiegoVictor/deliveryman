@@ -1,7 +1,7 @@
 import { hash } from 'bcrypt';
 
 import { prisma } from '../../../../database/prisma';
-import { IAccount } from '../../../accounts/models/IAccount';
+import { IAccount } from '../../../accounts/contracts/IAccount';
 
 export class CreateDeliverymanUseCase {
   async execute({ username, password }: IAccount) {
