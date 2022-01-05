@@ -1,5 +1,7 @@
 import { Router } from 'express';
 
+import { AuthenticateClientController } from '../../../modules/accounts/useCases/authenticateClient/AuthenticateClientController';
+import { CreateClientController } from '../../../modules/clients/useCases/createClient/CreateClientController';
 import { usernameAndPasswordValidator } from '../validators/usernameAndPassword';
 const app = Router();
 
