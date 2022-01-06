@@ -4,7 +4,7 @@ import { randomUUID } from 'crypto';
 
 import factory from '../../utils/factory';
 import { CreateDeliverymanController } from '../../../src/modules/deliveryman/useCases/createDeliveryman/CreateDeliverymanController';
-import { IAccount } from '../../../src/modules/accounts/models/IAccount';
+import { IAccount } from '../../../src/modules/accounts/contracts/IAccount';
 
 const execute = jest.fn(async (_: IAccount) => ({}));
 jest.mock(
