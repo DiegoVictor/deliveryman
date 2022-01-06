@@ -3,7 +3,7 @@ import { hash } from 'bcrypt';
 import { randomUUID } from 'crypto';
 
 import factory from '../../utils/factory';
-import { IAccount } from '../../../src/modules/accounts/models/IAccount';
+import { IAccount } from '../../../src/modules/accounts/contracts/IAccount';
 import { CreateClientController } from '../../../src/modules/clients/useCases/createClient/CreateClientController';
 
 const execute = jest.fn(async (_: IAccount) => ({}));

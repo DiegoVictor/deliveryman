@@ -1,7 +1,7 @@
 import { compare } from 'bcrypt';
 
 import factory from '../../utils/factory';
-import { IAccount } from '../../../src/modules/accounts/models/IAccount';
+import { IAccount } from '../../../src/modules/accounts/contracts/IAccount';
 import { CreateClientUseCase } from '../../../src/modules/clients/useCases/createClient/CreateClientUseCase';
 
 describe('CreateClientUseCase', () => {
