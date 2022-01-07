@@ -2,7 +2,7 @@ import { hash } from 'bcrypt';
 import { decode } from 'jsonwebtoken';
 
 import factory from '../../utils/factory';
-import { IAccount } from '../../../src/modules/accounts/models/IAccount';
+import { IAccount } from '../../../src/modules/accounts/contracts/IAccount';
 import { AuthenticateClientUseCase } from '../../../src/modules/accounts/useCases/authenticateClient/AuthenticateClientUseCase';
 import { prisma } from '../../../src/database/prisma';
 
