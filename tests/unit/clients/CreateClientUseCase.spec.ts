@@ -24,6 +24,6 @@ describe('CreateClientUseCase', () => {
     await createClientUseCase.execute(client);
     await expect(async () =>
       createClientUseCase.execute(client)
-    ).rejects.toEqual(new Error('Client already exists!'));
+    ).rejects.toEqual(new Error('Client already exists'));
   });
 });
