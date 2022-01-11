@@ -4,6 +4,7 @@ import { AuthenticateClientController } from '../../../modules/accounts/useCases
 import { CreateClientController } from '../../../modules/clients/useCases/createClient/CreateClientController';
 import { CreateDeliveryController } from '../../../modules/deliveries/useCases/createDelivery/CreateDeliveryController';
 import { usernameAndPasswordValidator } from '../validators/usernameAndPassword';
+import { FindClientDeliveriesController } from '../../../modules/clients/useCases/findClientDeliveries/FindClientDeliveriesController';
 import { ensureClientAuthentication } from '../middlewares/ensureClientAuthentication';
 import { productNameValidator } from '../validators/productName';
 
