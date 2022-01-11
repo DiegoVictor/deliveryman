@@ -3,6 +3,7 @@ import { Router } from 'express';
 import { AuthenticateClientController } from '../../../modules/accounts/useCases/authenticateClient/AuthenticateClientController';
 import { CreateClientController } from '../../../modules/clients/useCases/createClient/CreateClientController';
 import { usernameAndPasswordValidator } from '../validators/usernameAndPassword';
+import { ensureClientAuthentication } from '../middlewares/ensureClientAuthentication';
 const app = Router();
 
 const createClientController = new CreateClientController();
@@ -15,5 +16,6 @@ app.post(
   authenticateClientController.handle
 );
 
+app.use(ensureClientAuthentication);
 
 export default app;
