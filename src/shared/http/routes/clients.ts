@@ -8,6 +8,7 @@ const app = Router();
 
 const createClientController = new CreateClientController();
 const authenticateClientController = new AuthenticateClientController();
+const findClientDeliveriesController = new FindClientDeliveriesController();
 
 app.post('/', usernameAndPasswordValidator, createClientController.handle);
 app.post(
@@ -18,4 +19,5 @@ app.post(
 
 app.use(ensureClientAuthentication);
 
+app.get('/deliveries', findClientDeliveriesController.handle);
 export default app;
