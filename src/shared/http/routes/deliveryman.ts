@@ -3,6 +3,7 @@ import { Router } from 'express';
 import { AuthenticateDeliverymanController } from '../../../modules/accounts/useCases/authenticateDeliveryman/AuthenticateDeliverymanController';
 import { CreateDeliverymanController } from '../../../modules/deliveryman/useCases/createDeliveryman/CreateDeliverymanController';
 import { usernameAndPasswordValidator } from '../validators/usernameAndPassword';
+import { ensureDeliverymanAuthentication } from '../middlewares/ensureDeliverymanAuthentication';
 
 const app = Router();
 
@@ -17,4 +18,5 @@ app.post(
   authenticateDeliverymanController.handle
 );
 
+app.use(ensureDeliverymanAuthentication);
 export default app;
