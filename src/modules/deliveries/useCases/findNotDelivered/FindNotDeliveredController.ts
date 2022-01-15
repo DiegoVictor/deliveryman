@@ -1,6 +1,6 @@
 import { Request, Response } from 'express';
 
-import { FindNotDeliveredUseCase } from './findNotDeliveredUseCase';
+import { FindNotDeliveredUseCase } from './FindNotDeliveredUseCase';
 
 export class FindNotDeliveredController {
   async handle(_: Request, response: Response) {
