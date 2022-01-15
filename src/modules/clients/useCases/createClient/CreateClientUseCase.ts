@@ -1,3 +1,4 @@
+import { badRequest } from '@hapi/boom';
 import { hash } from 'bcrypt';
 
 import { prisma } from '../../../../database/prisma';
@@ -15,7 +16,7 @@ export class CreateClientUseCase {
     });
 
     if (client) {
-      throw new Error('Client already exists');
+      throw badRequest('Client already exists', { code: 240 });
     }
 
     const paswordHash = await hash(password, 10);

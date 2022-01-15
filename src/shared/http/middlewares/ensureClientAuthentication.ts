@@ -1,3 +1,4 @@
+import { badRequest, unauthorized } from '@hapi/boom';
 import { NextFunction, Request, Response } from 'express';
 import { verify } from 'jsonwebtoken';
 
@@ -9,9 +10,7 @@ export const ensureClientAuthentication = async (
   const authorization = request.headers.authorization;
 
   if (!authorization) {
-    return response.status(401).json({
-      message: 'Missing authentication token',
-    });
+    throw badRequest('Missing authentication token', { code: 440 });
   }
 
   const [, token] = authorization.split(' ');
@@ -24,8 +23,6 @@ export const ensureClientAuthentication = async (
 
     return next();
   } catch (err) {
-    return response.status(401).json({
-      message: 'Invalid authentication token',
-    });
+    throw unauthorized('Invalid authentication token', 'sample', { code: 441 });
   }
 };

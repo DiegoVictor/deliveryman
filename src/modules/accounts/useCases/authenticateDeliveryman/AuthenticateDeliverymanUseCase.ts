@@ -29,6 +29,6 @@ export class AuthenticateDeliverymanUseCase {
       return token;
     }
 
-    throw new Error('Username or password incorrect');
+    throw badRequest('Username or password incorrect', { code: 140 });
   }
 }
