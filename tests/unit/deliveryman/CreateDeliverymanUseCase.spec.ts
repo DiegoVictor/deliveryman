@@ -24,6 +24,6 @@ describe('CreateDeliverymanUseCase', () => {
     await createDeliverymanUseCase.execute(client);
     await expect(async () =>
       createDeliverymanUseCase.execute(client)
-    ).rejects.toEqual(new Error('Deliveryman already exists!'));
+    ).rejects.toEqual(new Error('Deliveryman already exists'));
   });
 });
