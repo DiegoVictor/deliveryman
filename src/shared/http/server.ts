@@ -2,6 +2,7 @@ import 'express-async-errors';
 import express, { NextFunction, Request, Response } from 'express';
 import cors from 'cors';
 import helmet from 'helmet';
+import { isBoom } from '@hapi/boom';
 
 import routes from './routes';
 
@@ -14,9 +15,13 @@ app.use(express.json());
 app.use('/v1', routes);
 
 app.use((err: Error, request: Request, response: Response, _: NextFunction) => {
-  if (err instanceof Error) {
-    return response.status(400).json({
-      message: err.message,
+  if (isBoom(err)) {
+    const { statusCode, payload } = err.output;
+
+    return response.status(statusCode).json({
+      ...payload,
+      ...err.data,
+      docs: process.env.DOCS_URL,
     });
   }
 
