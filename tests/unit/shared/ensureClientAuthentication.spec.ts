@@ -8,7 +8,7 @@ import { ensureClientAuthentication } from '../../../src/shared/http/middlewares
 describe('ensureClientAuthentication', () => {
   it('should be able to authenticate', async () => {
     const id = faker.datatype.uuid();
-    const token = sign({}, String(process.env.JWT_CLIENT_SECRET), {
+    const token = sign({}, String(process.env.JWT_CLIENTS_SECRET), {
       subject: id,
     });
     const request = getMockReq({
