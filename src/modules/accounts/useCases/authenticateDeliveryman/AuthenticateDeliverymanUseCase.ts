@@ -1,3 +1,4 @@
+import { badRequest } from '@hapi/boom';
 import { compare } from 'bcrypt';
 import { sign } from 'jsonwebtoken';
 
@@ -12,11 +13,7 @@ export class AuthenticateDeliverymanUseCase {
       },
     });
 
-    if (!deliveryman) {
-      throw new Error('Username or password incorrect');
-    }
-
-    if (await compare(password, deliveryman.password)) {
+    if (deliveryman && (await compare(password, deliveryman.password))) {
       const token = sign(
         { username },
         String(process.env.JWT_DELIVERYMAN_SECRET),

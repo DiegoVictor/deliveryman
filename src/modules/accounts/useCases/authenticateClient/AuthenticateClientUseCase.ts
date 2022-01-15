@@ -1,3 +1,4 @@
+import { badRequest } from '@hapi/boom';
 import { compare } from 'bcrypt';
 import { sign } from 'jsonwebtoken';
 
@@ -12,12 +13,8 @@ export class AuthenticateClientUseCase {
       },
     });
 
-    if (!client) {
-      throw new Error('Username or password incorrect');
-    }
-
-    if (await compare(password, client.password)) {
-      const token = sign({ username }, String(process.env.JWT_CLIENT_SECRET), {
+    if (client && (await compare(password, client.password))) {
+      const token = sign({ username }, String(process.env.JWT_CLIENTS_SECRET), {
         subject: client.id,
         expiresIn: process.env.JWT_EXPIRATION,
       });
