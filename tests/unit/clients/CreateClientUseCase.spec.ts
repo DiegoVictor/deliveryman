@@ -3,6 +3,7 @@ import { compare } from 'bcrypt';
 import factory from '../../utils/factory';
 import { IAccount } from '../../../src/modules/accounts/contracts/IAccount';
 import { CreateClientUseCase } from '../../../src/modules/clients/useCases/createClient/CreateClientUseCase';
+import { badRequest } from '@hapi/boom';
 
 describe('CreateClientUseCase', () => {
   it('should be able to create a new client', async () => {
@@ -24,6 +25,6 @@ describe('CreateClientUseCase', () => {
     await createClientUseCase.execute(client);
     await expect(async () =>
       createClientUseCase.execute(client)
-    ).rejects.toEqual(new Error('Client already exists'));
+    ).rejects.toEqual(badRequest('Client already exists', { code: 240 }));
   });
 });

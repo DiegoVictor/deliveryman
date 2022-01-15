@@ -1,3 +1,4 @@
+import { badRequest, unauthorized } from '@hapi/boom';
 import { getMockReq, getMockRes } from '@jest-mock/express';
 import faker from 'faker';
 import { sign } from 'jsonwebtoken';
@@ -27,13 +28,12 @@ describe('ensureClientAuthentication', () => {
     const request = getMockReq();
     const { res: response, next } = getMockRes();
 
-    await ensureClientAuthentication(request, response, next);
-
+    await expect(() =>
+      ensureClientAuthentication(request, response, next)
+    ).rejects.toEqual(
+      badRequest('Missing authentication token', { code: 440 })
+    );
     expect(next).not.toHaveBeenCalled();
-    expect(response.status).toHaveBeenCalledWith(401);
-    expect(response.json).toHaveBeenCalledWith({
-      message: 'Missing authentication token',
-    });
   });
 
   it('should not be able to authenticate with invalid token', async () => {
@@ -48,12 +48,11 @@ describe('ensureClientAuthentication', () => {
     });
     const { res: response, next } = getMockRes();
 
-    await ensureClientAuthentication(request, response, next);
-
+    await expect(() =>
+      ensureClientAuthentication(request, response, next)
+    ).rejects.toEqual(
+      unauthorized('Invalid authentication token', 'sample', { code: 441 })
+    );
     expect(next).not.toHaveBeenCalled();
-    expect(response.status).toHaveBeenCalledWith(401);
-    expect(response.json).toHaveBeenCalledWith({
-      message: 'Invalid authentication token',
-    });
   });
 });
