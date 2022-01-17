@@ -1,4 +1,4 @@
-import { prisma } from '../../../../shared/infra/prisma/client';
+import { prisma } from '../../../src/database/prisma';
 import { IDelivery } from '../../contracts/IDelivery';
 
 export class SetDeliveryDeliverymanUseCase {

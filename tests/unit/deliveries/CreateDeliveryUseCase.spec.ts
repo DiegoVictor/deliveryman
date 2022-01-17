@@ -3,7 +3,7 @@ import { hash } from 'bcrypt';
 
 import factory from '../../utils/factory';
 import { CreateDeliveryUseCase } from '../../../src/modules/deliveries/useCases/createDelivery/CreateDeliveryUseCase';
-import { prisma } from '../../../src/shared/infra/prisma/client';
+import { prisma } from '../../../src/database/prisma';
 import { IAccount } from '../../../src/modules/accounts/contracts/IAccount';
 
 describe('CreateDeliveryUseCase', () => {
