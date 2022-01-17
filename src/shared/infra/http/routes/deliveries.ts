@@ -1,10 +1,10 @@
 import { Router } from 'express';
 
-import { FindNotDeliveredController } from '../../../modules/deliveries/useCases/findNotDelivered/FindNotDeliveredController';
-import { SetDeliveryDeliverymanController } from '../../../modules/deliveries/useCases/setDeliveryDeliveryman/SetDeliveryDeliverymanController';
-import { ensureDeliverymanAuthentication } from '../../infra/http/middlewares/ensureDeliverymanAuthentication';
-import { SetAsDeliveredController } from '../../../modules/deliveries/useCases/setAsDelivered/SetAsDeliveredController';
-import { idValidator } from '../../infra/http/validators/id';
+import { FindNotDeliveredController } from '../../../../modules/deliveries/useCases/findNotDelivered/FindNotDeliveredController';
+import { SetDeliveryDeliverymanController } from '../../../../modules/deliveries/useCases/setDeliveryDeliveryman/SetDeliveryDeliverymanController';
+import { ensureDeliverymanAuthentication } from '../middlewares/ensureDeliverymanAuthentication';
+import { SetAsDeliveredController } from '../../../../modules/deliveries/useCases/setAsDelivered/SetAsDeliveredController';
+import { idValidator } from '../validators/id';
 
 const app = Router();
 
