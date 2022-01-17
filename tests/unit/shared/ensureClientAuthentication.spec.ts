@@ -3,7 +3,7 @@ import { getMockReq, getMockRes } from '@jest-mock/express';
 import faker from 'faker';
 import { sign } from 'jsonwebtoken';
 
-import { ensureClientAuthentication } from '../../../src/shared/http/middlewares/ensureClientAuthentication';
+import { ensureClientAuthentication } from '../../../src/shared/infra/http/middlewares/ensureClientAuthentication';
 
 describe('ensureClientAuthentication', () => {
   it('should be able to authenticate', async () => {
