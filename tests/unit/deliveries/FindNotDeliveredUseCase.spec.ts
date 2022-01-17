@@ -1,6 +1,6 @@
 import { prisma } from '../../../src/database/prisma';
 import factory from '../../utils/factory';
-import { FindNotDeliveredUseCase } from '../../../src/modules/deliveries/useCases/findNotDelivered/findNotDeliveredUseCase';
+import { FindNotDeliveredUseCase } from '../../../src/modules/deliveries/useCases/findNotDelivered/FindNotDeliveredUseCase';
 import { IDelivery } from '../../../src/modules/deliveries/contracts/IDelivery';
 import { IAccount } from '../../../src/modules/accounts/contracts/IAccount';
 
