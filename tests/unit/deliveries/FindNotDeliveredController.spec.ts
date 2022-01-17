@@ -8,7 +8,7 @@ import { IAccount } from '../../../src/modules/accounts/contracts/IAccount';
 
 const execute = jest.fn(async () => ({}));
 jest.mock(
-  '../../../src/modules/deliveries/useCases/findNotDelivered/findNotDeliveredUseCase',
+  '../../../src/modules/deliveries/useCases/findNotDelivered/FindNotDeliveredUseCase',
   () => {
     return {
       FindNotDeliveredUseCase: function UseCase() {
