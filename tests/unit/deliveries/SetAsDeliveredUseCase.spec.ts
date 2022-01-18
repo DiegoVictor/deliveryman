@@ -1,4 +1,4 @@
-import { prisma } from '../../../src/shared/infra/prisma/client';
+import { prisma } from '../../../src/database/prisma';
 import { SetAsDeliveredUseCase } from '../../../src/modules/deliveries/useCases/setAsDelivered/SetAsDeliveredUseCase';
 import factory from '../../utils/factory';
 import { IDelivery } from '../../../src/modules/deliveries/contracts/IDelivery';
