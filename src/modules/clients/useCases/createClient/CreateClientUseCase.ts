@@ -3,17 +3,17 @@ import { hash } from 'bcrypt';
 
 import { prisma } from '../../../../database/prisma';
 import { IAccount } from '../../../accounts/contracts/IAccount';
+import { IClientRepository } from '../../../accounts/contracts/IClientRepository';
 
 export class CreateClientUseCase {
+  private repository: IClientRepository;
+
+  constructor(repository: IClientRepository) {
+    this.repository = repository;
+  }
+
   async execute({ username, password }: IAccount) {
-    const client = await prisma.clients.findFirst({
-      where: {
-        username: {
-          mode: 'insensitive',
-          equals: username,
-        },
-      },
-    });
+    const client = await this.repository.findByUsername(username);
 
     if (client) {
       throw badRequest('Client already exists', { code: 240 });
