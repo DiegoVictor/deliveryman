@@ -1,7 +1,6 @@
 import { badRequest } from '@hapi/boom';
 import { hash } from 'bcrypt';
 
-import { prisma } from '../../../../database/prisma';
 import { IAccount } from '../../../accounts/contracts/IAccount';
 import { IClientRepository } from '../../../accounts/contracts/IClientRepository';
 
@@ -21,11 +20,9 @@ export class CreateClientUseCase {
 
     const paswordHash = await hash(password, 10);
 
-    return prisma.clients.create({
-      data: {
-        username,
-        password: paswordHash,
-      },
+    return this.repository.create({
+      username,
+      password: paswordHash,
     });
   }
 }

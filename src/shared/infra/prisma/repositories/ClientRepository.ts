@@ -14,4 +14,12 @@ export class ClientRepository implements IClientRepository {
     });
   }
 
+  async create({ username, password }: IAccount) {
+    return prisma.clients.create({
+      data: {
+        username,
+        password,
+      },
+    });
+  }
 }
