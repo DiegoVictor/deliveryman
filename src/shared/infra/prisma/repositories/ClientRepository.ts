@@ -3,6 +3,19 @@ import { IAccount } from '../../../../modules/accounts/contracts/IAccount';
 import { prisma } from '../client';
 
 export class ClientRepository implements IClientRepository {
+  async findById(id: string) {
+    return prisma.clients.findFirst({
+      where: {
+        id,
+      },
+      select: {
+        id: true,
+        deliveries: true,
+        username: true,
+      },
+    });
+  }
+
   async findByUsername(username: string) {
     return prisma.clients.findFirst({
       where: {

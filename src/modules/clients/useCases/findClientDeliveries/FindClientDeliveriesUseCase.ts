@@ -1,16 +1,13 @@
-import { prisma } from '../../../../database/prisma';
+import { IClientRepository } from '../../../accounts/contracts/IClientRepository';
 
 export class FindClientDeliveriesUseCase {
+  private repository: IClientRepository;
+
+  constructor(repository: IClientRepository) {
+    this.repository = repository;
+  }
+
   async execute(client_id: string) {
-    return prisma.clients.findFirst({
-      where: {
-        id: client_id,
-      },
-      select: {
-        deliveries: true,
-        id: true,
-        username: true,
-      },
-    });
+    return this.repository.findById(client_id);
   }
 }
