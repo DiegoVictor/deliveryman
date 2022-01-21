@@ -4,20 +4,25 @@ import { decode } from 'jsonwebtoken';
 import factory from '../../utils/factory';
 import { IAccount } from '../../../src/modules/accounts/contracts/IAccount';
 import { AuthenticateClientUseCase } from '../../../src/modules/accounts/useCases/authenticateClient/AuthenticateClientUseCase';
-import { prisma } from '../../../src/database/prisma';
+import { FakeClientRepository } from '../../../src/shared/repositories/FakeClientRepository';
 
 describe('AuthenticateClientUseCase', () => {
+  beforeAll(() => {
+    process.env.JWT_EXPIRATION = '1d';
+  });
+
   it('should be able to authenticate with client', async () => {
     const client = await factory.attrs<IAccount>('Account');
+    const fakeClientRepository = new FakeClientRepository();
 
-    const { id } = await prisma.clients.create({
-      data: {
-        username: client.username,
-        password: await hash(client.password, 10),
-      },
+    const { id } = await fakeClientRepository.create({
+      username: client.username,
+      password: await hash(client.password, 10),
     });
 
-    const authenticateClientUseCase = new AuthenticateClientUseCase();
+    const authenticateClientUseCase = new AuthenticateClientUseCase(
+      fakeClientRepository
+    );
     const token = await authenticateClientUseCase.execute(client);
 
     expect(token).toBeTruthy();
@@ -33,8 +38,11 @@ describe('AuthenticateClientUseCase', () => {
 
   it('should not be able to authenticate with non existing client', async () => {
     const client = await factory.attrs<IAccount>('Account');
+    const fakeClientRepository = new FakeClientRepository();
 
-    const authenticateClientUseCase = new AuthenticateClientUseCase();
+    const authenticateClientUseCase = new AuthenticateClientUseCase(
+      fakeClientRepository
+    );
     await expect(() =>
       authenticateClientUseCase.execute(client)
     ).rejects.toEqual(new Error('Username or password incorrect'));
@@ -42,15 +50,16 @@ describe('AuthenticateClientUseCase', () => {
 
   it('should not be able to authenticate wrong password', async () => {
     const client = await factory.attrs<IAccount>('Account');
+    const fakeClientRepository = new FakeClientRepository();
 
-    await prisma.clients.create({
-      data: {
-        username: client.username,
-        password: await hash(client.password, 10),
-      },
+    await fakeClientRepository.create({
+      username: client.username,
+      password: await hash(client.password, 10),
     });
 
-    const authenticateClientUseCase = new AuthenticateClientUseCase();
+    const authenticateClientUseCase = new AuthenticateClientUseCase(
+      fakeClientRepository
+    );
     await expect(() =>
       authenticateClientUseCase.execute({
         ...client,
