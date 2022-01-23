@@ -1,15 +1,17 @@
 import { compare } from 'bcrypt';
+import { badRequest } from '@hapi/boom';
 
 import factory from '../../utils/factory';
 import { IAccount } from '../../../src/modules/accounts/contracts/IAccount';
 import { CreateClientUseCase } from '../../../src/modules/clients/useCases/createClient/CreateClientUseCase';
-import { badRequest } from '@hapi/boom';
+import { FakeClientRepository } from '../../../src/shared/repositories/FakeClientRepository';
 
 describe('CreateClientUseCase', () => {
   it('should be able to create a new client', async () => {
     const client = await factory.attrs<IAccount>('Account');
+    const fakeClientRepository = new FakeClientRepository();
 
-    const createClientUseCase = new CreateClientUseCase();
+    const createClientUseCase = new CreateClientUseCase(fakeClientRepository);
     const response = await createClientUseCase.execute(client);
 
     expect(response).toHaveProperty('id', expect.any(String));
@@ -19,8 +21,9 @@ describe('CreateClientUseCase', () => {
 
   it('should not be able to create a new client', async () => {
     const client = await factory.attrs<IAccount>('Account');
+    const fakeClientRepository = new FakeClientRepository();
 
-    const createClientUseCase = new CreateClientUseCase();
+    const createClientUseCase = new CreateClientUseCase(fakeClientRepository);
 
     await createClientUseCase.execute(client);
     await expect(async () =>
