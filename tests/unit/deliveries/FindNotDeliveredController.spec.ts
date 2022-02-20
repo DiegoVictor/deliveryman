@@ -1,7 +1,7 @@
 import { getMockReq, getMockRes } from '@jest-mock/express';
 
 import factory from '../../utils/factory';
-import { prisma } from '../../../src/database/prisma';
+import { prisma } from '../../../src/shared/infra/prisma/client';
 import { FindNotDeliveredController } from '../../../src/modules/deliveries/useCases/findNotDelivered/FindNotDeliveredController';
 import { IDelivery } from '../../../src/modules/deliveries/contracts/IDelivery';
 import { IAccount } from '../../../src/modules/accounts/contracts/IAccount';
