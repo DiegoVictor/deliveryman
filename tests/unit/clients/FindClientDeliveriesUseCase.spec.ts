@@ -1,28 +1,36 @@
-import { prisma } from '../../../src/database/prisma';
+import faker from 'faker';
+
 import { FindClientDeliveriesUseCase } from '../../../src/modules/clients/useCases/findClientDeliveries/FindClientDeliveriesUseCase';
 import factory from '../../utils/factory';
 import { IDelivery } from '../../../src/modules/deliveries/contracts/IDelivery';
 import { IAccount } from '../../../src/modules/accounts/contracts/IAccount';
+import { FakeClientRepository } from '../../../src/shared/repositories/FakeClientRepository';
 
 describe('FindClientDeliveriesUseCase', () => {
   it("should be able to find clients' deliveries", async () => {
+    const id = faker.datatype.uuid();
     const client = await factory.attrs<IAccount>('Account');
-    const { id: client_id } = await prisma.clients.create({
-      data: client,
-    });
-
     const deliveries = await factory.attrsMany<IDelivery>('Delivery', 5, {
-      client_id,
-    });
-    await prisma.deliveries.createMany({
-      data: deliveries,
+      id: faker.datatype.uuid,
+      client_id: id,
     });
 
-    const findClientDeliveriesUseCase = new FindClientDeliveriesUseCase();
-    const response = await findClientDeliveriesUseCase.execute(client_id);
+    const fakeClientRepository = new FakeClientRepository();
+    const findClientDeliveriesUseCase = new FindClientDeliveriesUseCase(
+      fakeClientRepository
+    );
+
+    jest.spyOn(fakeClientRepository, 'findById').mockReturnValue(
+      Promise.resolve({
+        id,
+        username: client.username,
+        deliveries,
+      })
+    );
+    const response = await findClientDeliveriesUseCase.execute(id);
 
     expect(response).toStrictEqual({
-      id: client_id,
+      id,
       username: client.username,
       deliveries: deliveries.map(delivery => ({
         id: expect.any(String),
