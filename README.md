@@ -12,3 +12,16 @@
 
 Permit to register clients, deliverymen, deliveries and manage deliveries status (in progress, done, etc). The app has friendly errors, use JWT to logins, validation, also a simple versioning was made.
 
+## Table of Contents
+* [Installing](#installing)
+
+# Installing
+Easy peasy lemon squeezy:
+```
+$ yarn
+```
+Or:
+```
+$ npm install
+```
+> Was installed and configured the [`eslint`](https://eslint.org/) and [`prettier`](https://prettier.io/) to keep the code clean and patterned.
