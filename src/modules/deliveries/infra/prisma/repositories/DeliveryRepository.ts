@@ -11,4 +11,12 @@ export class DeliveryRepository implements IDeliveryRepository {
       data,
     });
   }
+
+  async updateMany(where: Partial<IDelivery>, data: Partial<IDelivery>) {
+    return prisma.deliveries.updateMany({
+      where,
+      data,
+    });
+  }
+
 }
