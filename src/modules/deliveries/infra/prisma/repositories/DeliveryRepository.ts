@@ -19,4 +19,12 @@ export class DeliveryRepository implements IDeliveryRepository {
     });
   }
 
+  async findNotDeliverd() {
+    return prisma.deliveries.findMany({
+      where: {
+        delivered_at: null,
+        deliveryman_id: null,
+      },
+    });
+  }
 }

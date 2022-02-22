@@ -1,12 +1,13 @@
-import { prisma } from '../../../../database/prisma';
+import { IDeliveryRepository } from '../../contracts/IDeliveryRepository';
 
 export class FindNotDeliveredUseCase {
+  private repository: IDeliveryRepository;
+
+  constructor(repository: IDeliveryRepository) {
+    this.repository = repository;
+  }
+
   async execute() {
-    return prisma.deliveries.findMany({
-      where: {
-        delivered_at: null,
-        deliveryman_id: null,
-      },
-    });
+    return this.repository.findNotDeliverd();
   }
 }
