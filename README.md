@@ -14,6 +14,7 @@ Permit to register clients, deliverymen, deliveries and manage deliveries status
 
 ## Table of Contents
 * [Installing](#installing)
+  * [Configuring](#configuring)
 
 # Installing
 Easy peasy lemon squeezy:
@@ -25,3 +26,10 @@ Or:
 $ npm install
 ```
 > Was installed and configured the [`eslint`](https://eslint.org/) and [`prettier`](https://prettier.io/) to keep the code clean and patterned.
+
+## Configuring
+The application use just one database: [Postgres](https://www.postgresql.org/). For the fastest setup is recommended to use [docker-compose](https://docs.docker.com/compose/), you just need to up all services:
+```
+$ docker-compose up -d
+```
+
