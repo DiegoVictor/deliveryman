@@ -15,6 +15,7 @@ Permit to register clients, deliverymen, deliveries and manage deliveries status
 ## Table of Contents
 * [Installing](#installing)
   * [Configuring](#configuring)
+    * [Postgres](#postgres)
 
 # Installing
 Easy peasy lemon squeezy:
@@ -31,5 +32,11 @@ $ npm install
 The application use just one database: [Postgres](https://www.postgresql.org/). For the fastest setup is recommended to use [docker-compose](https://docs.docker.com/compose/), you just need to up all services:
 ```
 $ docker-compose up -d
+```
+
+### Postgres
+Responsible to store all application data. If for any reason you would like to create a Postgres container instead of use `docker-compose`, you can do it by running the following command:
+```
+$ docker run --name deliveryman-postgres -e POSTGRES_PASSWORD=docker -p 5432:5432 -d postgres
 ```
 
