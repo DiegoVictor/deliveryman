@@ -1,4 +1,3 @@
-import { prisma } from '../../../src/shared/infra/prisma/client';
 import factory from '../../utils/factory';
 import { FindNotDeliveredUseCase } from '../../../src/modules/deliveries/useCases/findNotDelivered/FindNotDeliveredUseCase';
 import { IDelivery } from '../../../src/modules/deliveries/contracts/IDelivery';
@@ -24,7 +23,11 @@ describe('FindNotDeliveredUseCase', () => {
     const response = await findNotDeliveredUseCase.execute();
 
     deliveries.forEach(delivery => {
-      expect(response).toContainEqual({ id: expect.any(String), ...delivery });
+      expect(response).toContainEqual({
+        ...delivery,
+        id: expect.any(String),
+        created_at: expect.any(Date),
+      });
     });
   });
 });
