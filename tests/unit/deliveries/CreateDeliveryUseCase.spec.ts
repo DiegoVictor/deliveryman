@@ -1,24 +1,20 @@
 import faker from 'faker';
-import { hash } from 'bcrypt';
 
 import factory from '../../utils/factory';
 import { CreateDeliveryUseCase } from '../../../src/modules/deliveries/useCases/createDelivery/CreateDeliveryUseCase';
-import { prisma } from '../../../src/database/prisma';
-import { IAccount } from '../../../src/modules/accounts/contracts/IAccount';
+import { FakeDeliveryRepository } from '../../../src/modules/deliveries/repositories/FakeDeliveryRepository';
+import { IDelivery } from '../../../src/modules/deliveries/contracts/IDelivery';
 
 describe('CreateDeliveryUseCase', () => {
   it('should be able to create a new delivery', async () => {
-    const client = await factory.attrs<IAccount>('Account');
+    const deliveryRepository = new FakeDeliveryRepository();
 
-    const { id: client_id } = await prisma.clients.create({
-      data: {
-        username: client.username,
-        password: await hash(client.password, 10),
-      },
-    });
+    const { client_id, product_name } = await factory.attrs<IDelivery>(
+      'Delivery'
+    );
+    await deliveryRepository.create({ client_id, product_name });
 
-    const product_name = faker.commerce.productName();
-    const createDeliveryUseCase = new CreateDeliveryUseCase();
+    const createDeliveryUseCase = new CreateDeliveryUseCase(deliveryRepository);
     const delivery = await createDeliveryUseCase.execute({
       product_name,
       client_id,
