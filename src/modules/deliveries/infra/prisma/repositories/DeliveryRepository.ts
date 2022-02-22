@@ -27,4 +27,16 @@ export class DeliveryRepository implements IDeliveryRepository {
       },
     });
   }
+
+  async create({
+    client_id,
+    product_name,
+  }: Pick<IDelivery, 'client_id' | 'product_name'>) {
+    return prisma.deliveries.create({
+      data: {
+        client_id,
+        product_name,
+      },
+    });
+  }
 }
