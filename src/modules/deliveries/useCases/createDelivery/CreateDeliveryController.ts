@@ -1,4 +1,6 @@
 import { Request, Response } from 'express';
+
+import { DeliveryRepository } from '../../infra/prisma/repositories/DeliveryRepository';
 import { CreateDeliveryUseCase } from './CreateDeliveryUseCase';
 
 export class CreateDeliveryController {
@@ -6,7 +8,8 @@ export class CreateDeliveryController {
     const { client_id } = request;
     const { product_name } = request.body;
 
-    const createDeliveryUseCase = new CreateDeliveryUseCase();
+    const deliveryRepository = new DeliveryRepository();
+    const createDeliveryUseCase = new CreateDeliveryUseCase(deliveryRepository);
     const delivery = await createDeliveryUseCase.execute({
       client_id,
       product_name,
