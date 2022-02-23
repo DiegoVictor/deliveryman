@@ -28,6 +28,7 @@ describe('SetDeliveryDeliverymanUseCase', () => {
       id,
       deliveryman_id,
       client_id,
+      created_at: expect.any(Date),
     });
   });
 });
