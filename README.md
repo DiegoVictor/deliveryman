@@ -16,6 +16,8 @@ Permit to register clients, deliverymen, deliveries and manage deliveries status
 * [Installing](#installing)
   * [Configuring](#configuring)
     * [Postgres](#postgres)
+      * [Migrations](#migrations)
+    * [.env](#env)
 
 # Installing
 Easy peasy lemon squeezy:
@@ -40,3 +42,25 @@ Responsible to store all application data. If for any reason you would like to c
 $ docker run --name deliveryman-postgres -e POSTGRES_PASSWORD=docker -p 5432:5432 -d postgres
 ```
 
+#### Migrations
+Remember to run the Postgres database migrations:
+```
+$ npx prisma migrate deploy
+```
+Or:
+```
+$ yarn prisma migrate deploy
+```
+> See more information on [migrate deploy](https://www.prisma.io/docs/reference/api-reference/command-reference#migrate-deploy).
+
+### .env
+In this file you may configure your JWT settings, database connection, app's port and a url to documentation (this will be returned with error responses, see [error section](#error-handling)). Rename the `.env.example` in the root directory to `.env` then just update with your settings.
+
+|key|description|default
+|---|---|---
+|PORT|Port number where the app will run.|`3333`
+|JWT_CLIENTS_SECRET|A alphanumeric random string. Used to create signed tokens for clients logins.| -
+|JWT_DELIVERYMAN_SECRET|A alphanumeric random string. Used to create signed tokens for deliverymen logins.| -
+|JWT_EXPIRATION|How long time will be the token valid. See [jsonwebtoken](https://github.com/auth0/node-jsonwebtoken#usage) repo for more information.|`1d`
+|DATABASE_URL|Database url.|`postgresql://postgres:docker@localhost:5432/deliveryman?schema=public`
+|DOCS_URL|An url to docs where users can find more information about the app's internal code errors.|`https://github.com/DiegoVictor/deliveryman#errors-reference`
