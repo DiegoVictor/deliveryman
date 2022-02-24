@@ -3,21 +3,26 @@ import { decode } from 'jsonwebtoken';
 
 import factory from '../../utils/factory';
 import { IAccount } from '../../../src/modules/accounts/contracts/IAccount';
-import { prisma } from '../../../src/database/prisma';
 import { AuthenticateDeliverymanUseCase } from '../../../src/modules/accounts/useCases/authenticateDeliveryman/AuthenticateDeliverymanUseCase';
+import { FakeDeliverymanRepository } from '../../../src/shared/repositories/FakeDeliverymanRepository';
 
 describe('AuthenticateDeliveryUseCase', () => {
+  beforeAll(() => {
+    process.env.JWT_EXPIRATION = '1d';
+  });
+
   it('should be able to authenticate with deliveryman', async () => {
     const deliveryman = await factory.attrs<IAccount>('Account');
+    const fakeDeliverymanRepository = new FakeDeliverymanRepository();
 
-    const { id } = await prisma.deliveryman.create({
-      data: {
-        username: deliveryman.username,
-        password: await hash(deliveryman.password, 10),
-      },
+    const { id } = await fakeDeliverymanRepository.create({
+      username: deliveryman.username,
+      password: await hash(deliveryman.password, 10),
     });
 
-    const authenticateDeliverymanUseCase = new AuthenticateDeliverymanUseCase();
+    const authenticateDeliverymanUseCase = new AuthenticateDeliverymanUseCase(
+      fakeDeliverymanRepository
+    );
     const token = await authenticateDeliverymanUseCase.execute(deliveryman);
 
     expect(token).toBeTruthy();
@@ -33,8 +38,11 @@ describe('AuthenticateDeliveryUseCase', () => {
 
   it('should not be able to authenticate with non existing deliveryman', async () => {
     const deliveryman = await factory.attrs<IAccount>('Account');
+    const fakeDeliverymanRepository = new FakeDeliverymanRepository();
 
-    const authenticateDeliverymanUseCase = new AuthenticateDeliverymanUseCase();
+    const authenticateDeliverymanUseCase = new AuthenticateDeliverymanUseCase(
+      fakeDeliverymanRepository
+    );
     await expect(() =>
       authenticateDeliverymanUseCase.execute(deliveryman)
     ).rejects.toEqual(new Error('Username or password incorrect'));
@@ -42,15 +50,16 @@ describe('AuthenticateDeliveryUseCase', () => {
 
   it('should not be able to authenticate wrong password', async () => {
     const deliveryman = await factory.attrs<IAccount>('Account');
+    const fakeDeliverymanRepository = new FakeDeliverymanRepository();
 
-    await prisma.deliveryman.create({
-      data: {
-        username: deliveryman.username,
-        password: await hash(deliveryman.password, 10),
-      },
+    await fakeDeliverymanRepository.create({
+      username: deliveryman.username,
+      password: await hash(deliveryman.password, 10),
     });
 
-    const authenticateDeliverymanUseCase = new AuthenticateDeliverymanUseCase();
+    const authenticateDeliverymanUseCase = new AuthenticateDeliverymanUseCase(
+      fakeDeliverymanRepository
+    );
     await expect(() =>
       authenticateDeliverymanUseCase.execute({
         ...deliveryman,
