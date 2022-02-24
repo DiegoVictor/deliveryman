@@ -1,40 +1,36 @@
-import { prisma } from '../../../src/database/prisma';
+import faker from 'faker';
+
 import factory from '../../utils/factory';
 import { IDelivery } from '../../../src/modules/deliveries/contracts/IDelivery';
 import { IAccount } from '../../../src/modules/accounts/contracts/IAccount';
 import { FindDeliverymanDeliveriesUseCase } from '../../../src/modules/deliveryman/useCases/findDeliverymanDeliveries/FindDeliverymanDeliveriesUseCase';
+import { FakeDeliverymanRepository } from '../../../src/shared/repositories/FakeDeliverymanRepository';
 
 describe('FindDeliverymanDeliveriesUseCase', () => {
   it("should be able to find deliveryman's deliveries", async () => {
-    const [client, deliveryman] = await factory.attrsMany<IAccount>(
-      'Account',
-      2
-    );
-    const [{ id: client_id }, { id: deliveryman_id }] = await Promise.all([
-      prisma.clients.create({
-        data: client,
-      }),
-      prisma.deliveryman.create({
-        data: deliveryman,
-      }),
-    ]);
-
+    const id = faker.datatype.uuid();
+    const deliveryman = await factory.attrs<IAccount>('Account');
     const deliveries = await factory.attrsMany<IDelivery>('Delivery', 5, {
-      client_id,
-      deliveryman_id,
+      id: faker.datatype.uuid,
+      client_id: faker.datatype.uuid,
+      deliveryman_id: id,
     });
-    await prisma.deliveries.createMany({
-      data: deliveries,
-    });
+
+    const fakeDeliverymanRepository = new FakeDeliverymanRepository();
+    jest.spyOn(fakeDeliverymanRepository, 'findById').mockReturnValue(
+      Promise.resolve({
+        id,
+        username: deliveryman.username,
+        deliveries,
+      })
+    );
 
     const findDeliverymanDeliveriesUseCase =
-      new FindDeliverymanDeliveriesUseCase();
-    const response = await findDeliverymanDeliveriesUseCase.execute(
-      deliveryman_id
-    );
+      new FindDeliverymanDeliveriesUseCase(fakeDeliverymanRepository);
+    const response = await findDeliverymanDeliveriesUseCase.execute(id);
 
     expect(response).toStrictEqual({
-      id: deliveryman_id,
+      id,
       username: deliveryman.username,
       deliveries: deliveries.map(delivery => ({
         id: expect.any(String),
