@@ -5,7 +5,14 @@
     "strict": false,
     "lib": ["esnext"],
     "esModuleInterop": true,
-    "resolveJsonModule": true
+    "resolveJsonModule": true,
+    "baseUrl": "./",
+    "paths": {
+      "@modules/*": ["./src/modules/*"],
+      "@validators/*": ["./src/shared/infra/http/validators/*"],
+      "@middlewares/*": ["./src/shared/infra/http/middlewares/*"],
+      "@repositories/*": ["./src/shared/infra/prisma/repositories/*"],
+    }
   },
   "exclude": ["tests"]
 }
