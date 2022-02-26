@@ -18,6 +18,15 @@ Permit to register clients, deliverymen, deliveries and manage deliveries status
     * [Postgres](#postgres)
       * [Migrations](#migrations)
     * [.env](#env)
+* [Usage](#usage)
+  * [Error Handling](#error-handling)
+    * [Errors Reference](#errors-reference)
+  * [Bearer Token](#bearer-token)
+  * [Versioning](#versioning)
+  * [Routes](#routes)
+    * [Requests](#requests)
+* [Running the tests](#running-the-tests)
+  * [Coverage report](#coverage-report)
 
 # Installing
 Easy peasy lemon squeezy:
@@ -64,3 +73,128 @@ In this file you may configure your JWT settings, database connection, app's por
 |JWT_EXPIRATION|How long time will be the token valid. See [jsonwebtoken](https://github.com/auth0/node-jsonwebtoken#usage) repo for more information.|`1d`
 |DATABASE_URL|Database url.|`postgresql://postgres:docker@localhost:5432/deliveryman?schema=public`
 |DOCS_URL|An url to docs where users can find more information about the app's internal code errors.|`https://github.com/DiegoVictor/deliveryman#errors-reference`
+
+# Usage
+To start up the app run:
+```
+$ yarn dev:server
+```
+Or:
+```
+npm run dev:server
+```
+
+## Error Handling
+Instead of only throw a simple message and HTTP Status Code this API return friendly errors:
+```json
+{
+  "statusCode": 400,
+  "error": "Bad Request",
+  "message": "Username or password incorrect",
+  "code": 140,
+  "docs": "https://github.com/DiegoVictor/deliveryman#errors-reference"
+}
+```
+> Errors are implemented with [@hapi/boom](https://github.com/hapijs/boom).
+> As you can see a url to error docs are returned too. To configure this url update the `DOCS_URL` key from `.env` file.
+> In the next sub section ([Errors Reference](#errors-reference)) you can see the errors `code` description.
+
+### Errors Reference
+|code|message|description
+|---|---|---
+|140|Username or password incorrect|User and/or password is incorrect.
+|240|Client already exists|The provided client's username is already in use.
+|340|Deliveryman already exists|The provided deliveryman's username is already in use.
+|440|Missing authentication token|The authentication token was not sent.
+|441|Invalid authentication token|The authentication token provided is invalid or expired.
+
+## Bearer Token
+A few routes expect a Bearer Token in an `Authorization` header.
+> You can see these routes in the [routes](#routes) section.
+```
+GET http://localhost:3333/v1/deliveryman/deliveries Authorization: Bearer <token>
+```
+> To achieve this token you just need authenticate through the `/sessions` route and it will return the `token` key with a valid Bearer Token.
+
+## Versioning
+A simple versioning was made. Just remember to set after the `host` the `/v1/` string to your requests.
+```
+GET http://localhost:3333/v1/deliveryman/deliveries
+```
+
+## Routes
+|route|HTTP Method|params|description|auth method
+|:---|:---:|:---:|:---:|:---:
+|`/clients`|POST|Body with client's `username` and `password`.|Create a new client|:x:
+|`/clients/auth`|POST|Body with client's `username` and `password`.|Authenticates clients, return a Bearer Token.|:x:
+|`/clients/deliveries`|GET| - |Retrieve client's deliveries.|Bearer (Client)
+|`/clients/deliveries`|POST|Body with delivery's `product_name`.|Create a new delivery.|Bearer (Client)
+|`/deliveryman`|POST|Body with deliveryman's `username` and `password`.|Create a new deliveryman.|:x:
+|`/deliveryman/auth`|POST|Body with deliveryman's `username` and `password`.|Authenticates deliveryman, return a Bearer Token.|:x:
+|`/deliveryman/deliveries`|GET| - |Retrieve deliveryman's deliveries.|Bearer (Deliveryman)
+|`/deliveries/not_delivered`|GET| - |Retrieve pending deliveries.|Bearer (Deliveryman)
+|`/deliveries/:id/set_deliveryman`|PATCH| - |Set deliveryman from the token as the responsible for the delivery.|Bearer (Deliveryman)
+|`/deliveries/:id/set_as_delivered`|PATCH| - |Set delivery as delivered.|Bearer (Deliveryman)
+
+### Requests
+* `POST /clients`
+
+Request body:
+```json
+{
+  "username": "johndoe",
+  "password": "123456"
+}
+```
+
+* `POST /clients/auth`
+
+Request body:
+```json
+{
+  "username": "johndoe",
+  "password": "123456"
+}
+```
+
+* `POST /clients/deliveries`
+
+Request body:
+```json
+{
+  "product_name": "Lemon Ice Cream"
+}
+```
+
+* `POST /deliveryman`
+
+Request body:
+```json
+{
+  "username": "janedoe",
+  "password": "123456"
+}
+```
+
+* `POST /deliveryman/auth`
+
+Request body:
+```json
+{
+  "username": "janedoe",
+  "password": "123456"
+}
+```
+
+# Running the tests
+[Jest](https://jestjs.io/) was the choice to test the app, to run:
+```
+$ yarn test
+```
+Or:
+```
+$ npm run test
+```
+
+## Coverage report
+You can see the coverage report inside `tests/coverage`. They are automatically created after the tests run.
