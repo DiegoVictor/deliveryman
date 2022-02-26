@@ -13,6 +13,7 @@ describe('SetAsDeliveredUseCase', () => {
 
     const delivery = await factory.attrs<IDelivery>('Delivery', {
       client_id,
+      deliveryman_id,
     });
     const { id } = await deliveryRepository.create(delivery);
 
@@ -21,11 +22,14 @@ describe('SetAsDeliveredUseCase', () => {
     });
 
     const setAsDeliveredUseCase = new SetAsDeliveredUseCase(deliveryRepository);
-    const response = await setAsDeliveredUseCase.execute({
+    const response = await setAsDeliveredUseCase.execute(id);
+
+    expect(response).toStrictEqual({
+      ...delivery,
       id,
       deliveryman_id,
+      created_at: expect.any(Date),
+      delivered_at: expect.any(Date),
     });
-
-    expect(response).toStrictEqual({ count: 1 });
   });
 });

@@ -8,18 +8,9 @@ export class SetAsDeliveredUseCase {
     this.repository = repository;
   }
 
-  async execute({
-    id,
-    deliveryman_id,
-  }: Pick<IDelivery, 'id' | 'deliveryman_id'>) {
-    return this.repository.updateMany(
-      {
-        id,
-        deliveryman_id,
-      },
-      {
-        delivered_at: new Date(),
-      }
-    );
+  async execute(id: string) {
+    return this.repository.updateById(id, {
+      delivered_at: new Date(),
+    });
   }
 }

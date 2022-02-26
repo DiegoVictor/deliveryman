@@ -1,4 +1,3 @@
-import { Prisma } from '.prisma/client';
 import { randomUUID } from 'crypto';
 
 import { IDelivery } from '@modules/deliveries/contracts/IDelivery';
@@ -19,29 +18,6 @@ export class FakeDeliveryRepository implements IDeliveryRepository {
     this.repository[deliveryIndex] = delivery;
 
     return delivery;
-  }
-
-  async updateMany(
-    where: Partial<IDelivery>,
-    data: Partial<IDelivery>
-  ): Promise<Prisma.BatchPayload> {
-    let count = 0;
-
-    this.repository = this.repository.map(delivery => {
-      const shouldBeUpdated = Object.keys(where).every(key => {
-        const name = key as keyof IDelivery;
-        return where[name] === delivery[name];
-      });
-
-      if (shouldBeUpdated) {
-        count++;
-        return Object.assign(delivery, data);
-      }
-
-      return delivery;
-    });
-
-    return { count };
   }
 
   async findNotDeliverd(): Promise<IDelivery[]> {
