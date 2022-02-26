@@ -1,0 +1,569 @@
+{
+  "openapi": "3.0.2",
+  "info": {
+    "title": "Deliveryman",
+    "version": "1.0",
+    "license": {
+      "name": "MIT",
+      "url": "https://raw.githubusercontent.com/DiegoVictor/deliveryman/main/LICENSE"
+    }
+  },
+  "servers": [
+    {
+      "url": "http://localhost:3333/v1"
+    }
+  ],
+  "paths": {
+    "/clients": {
+      "post": {
+        "tags": [
+          "Clients"
+        ],
+        "requestBody": {
+          "$ref": "#/components/requestBodies/Account"
+        },
+        "responses": {
+          "201": {
+            "description": "Client created successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "title": "Account",
+                      "properties": {
+                        "id": {
+                          "type": "string"
+                        }
+                      }
+                    },
+                    {
+                      "$ref": "#/components/schemas/Account"
+                    }
+                  ]
+                },
+                "example": {
+                  "id": "2e075d78-bf02-49c5-a52b-593d35db11e8",
+                  "username": "johndoe",
+                  "password": "$2b$10$ceg8QxJ7YmJuLCwqD6IxQeVI7D/lrgN7d3LhvRqoNl0JpJ0tF1rRy"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Client already exists",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "message": "Client already exists"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/clients/auth": {
+      "post": {
+        "tags": [
+          "Clients"
+        ],
+        "requestBody": {
+          "$ref": "#/components/requestBodies/Account"
+        },
+        "responses": {
+          "200": {
+            "description": "Authenticated successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "token": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "example": {
+                  "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImpvaG5kb2UiLCJpYXQiOjE2NDEyNDI2MjAsImV4cCI6MTY0MTMyOTAyMCwic3ViIjoiZGM4OTM4YjQtZGI2Zi00NDRlLWIyOTUtY2QxYWE3Y2VhODhhIn0.tsFee0ZP8ApjV2bFIwlLaeIYm6FgnNnyRP4TCXZPd2c"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Username or password incorrect",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "message": "Username or password incorrect"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/clients/deliveries": {
+      "get": {
+        "tags": [
+          "Clients"
+        ],
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Returned client's deliveries",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "title": "ClientDeliveries",
+                  "properties": {
+                    "id": {
+                      "type": "string"
+                    },
+                    "username": {
+                      "type": "string"
+                    },
+                    "deliveries": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/Delivery"
+                      }
+                    }
+                  }
+                },
+                "example": {
+                  "id": "dc8938b4-db6f-444e-b295-cd1aa7cea88a",
+                  "username": "johndoe",
+                  "deliveries": [
+                    {
+                      "id": "6ba73361-c164-411a-8dd9-a6dff6c63a2f",
+                      "client_id": "dc8938b4-db6f-444e-b295-cd1aa7cea88a",
+                      "deliveryman_id": "09142cc9-de04-4715-9e14-344e75907b39",
+                      "product_name": "Lemon Ice cream",
+                      "delivered_at": "2021-12-25T16:43:02.818Z",
+                      "created_at": "2021-12-25T16:01:46.365Z"
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/AuthenticationError"
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Clients"
+        ],
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "product_name": {
+                    "type": "string"
+                  }
+                }
+              },
+              "example": {
+                "product_name": "Lemon Ice Cream"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Delivery created successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Delivery"
+                },
+                "example": {
+                  "id": "57ca1294-7dcc-45a8-8bf3-baa6bd982f8b",
+                  "client_id": "dc8938b4-db6f-444e-b295-cd1aa7cea88a",
+                  "deliveryman_id": null,
+                  "product_name": "Lemon Ice Cream",
+                  "delivered_at": null,
+                  "created_at": "2022-01-03T21:08:12.980Z"
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/AuthenticationError"
+          }
+        }
+      }
+    },
+    "/deliveryman": {
+      "post": {
+        "tags": [
+          "Deliveryman"
+        ],
+        "requestBody": {
+          "$ref": "#/components/requestBodies/Account"
+        },
+        "responses": {
+          "201": {
+            "description": "Deliveryman created successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "title": "Account",
+                      "properties": {
+                        "id": {
+                          "type": "string"
+                        }
+                      }
+                    },
+                    {
+                      "$ref": "#/components/schemas/Account"
+                    }
+                  ]
+                },
+                "example": {
+                  "id": "2e075d78-bf02-49c5-a52b-593d35db11e8",
+                  "username": "janedoe",
+                  "password": "$2b$10$ceg8QxJ7YmJuLCwqD6IxQeVI7D/lrgN7d3LhvRqoNl0JpJ0tF1rRy"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Deliveryman already exists",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "message": "Deliveryman already exists"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/deliveryman/auth": {
+      "post": {
+        "tags": [
+          "Deliveryman"
+        ],
+        "requestBody": {
+          "$ref": "#/components/requestBodies/Account"
+        },
+        "responses": {
+          "200": {
+            "description": "Authenticated successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "token": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "example": {
+                  "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImpvaG5kb2UiLCJpYXQiOjE2NDEyNDI2MjAsImV4cCI6MTY0MTMyOTAyMCwic3ViIjoiZGM4OTM4YjQtZGI2Zi00NDRlLWIyOTUtY2QxYWE3Y2VhODhhIn0.tsFee0ZP8ApjV2bFIwlLaeIYm6FgnNnyRP4TCXZPd2c"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Username or password incorrect",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "message": "Username or password incorrect"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/deliveryman/deliveries": {
+      "get": {
+        "tags": [
+          "Deliveryman"
+        ],
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Returned client's deliveries",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "title": "ClientDeliveries",
+                  "properties": {
+                    "id": {
+                      "type": "string"
+                    },
+                    "username": {
+                      "type": "string"
+                    },
+                    "deliveries": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/Delivery"
+                      }
+                    }
+                  }
+                },
+                "example": {
+                  "id": "09142cc9-de04-4715-9e14-344e75907b39",
+                  "username": "janedoe",
+                  "deliveries": [
+                    {
+                      "id": "6ba73361-c164-411a-8dd9-a6dff6c63a2f",
+                      "client_id": "dc8938b4-db6f-444e-b295-cd1aa7cea88a",
+                      "deliveryman_id": "09142cc9-de04-4715-9e14-344e75907b39",
+                      "product_name": "Lemon Ice cream",
+                      "delivered_at": "2021-12-25T16:43:02.818Z",
+                      "created_at": "2021-12-25T16:01:46.365Z"
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/AuthenticationError"
+          }
+        }
+      }
+    },
+    "/deliveries/not_delivered": {
+      "get": {
+        "tags": [
+          "Deliveries"
+        ],
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Lists not deliveries not sent yet",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Delivery"
+                  }
+                },
+                "example": [
+                  {
+                    "id": "a3b25f46-6aa7-4079-90bc-bedbd79ee4ad",
+                    "client_id": "0ba9f177-96ff-4dbc-9dd2-bc05bf7179d3",
+                    "deliveryman_id": null,
+                    "product_name": "Small Wooden Pizza",
+                    "delivered_at": null,
+                    "created_at": "2021-12-25T16:04:56.534Z"
+                  }
+                ]
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/AuthenticationError"
+          }
+        }
+      }
+    },
+    "/deliveries/{id}/set_deliveryman": {
+      "patch": {
+        "tags": ["Deliveries"],
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "example": "a3b25f46-6aa7-4079-90bc-bedbd79ee4ad"
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Deliveryman takes the delivery successfully"
+          },
+          "401": {
+            "$ref": "#/components/responses/AuthenticationError"
+          }
+        }
+      }
+    },
+    "/deliveries/{id}/set_as_delivered": {
+      "patch": {
+        "tags": ["Deliveries"],
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "example": "a3b25f46-6aa7-4079-90bc-bedbd79ee4ad"
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Delivery reached its client"
+          },
+          "401": {
+            "$ref": "#/components/responses/AuthenticationError"
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "Account": {
+        "properties": {
+          "username": {
+            "type": "string"
+          },
+          "password": {
+            "type": "string"
+          }
+        }
+      },
+      "Delivery": {
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "client_id": {
+            "type": "string"
+          },
+          "deliveryman_id": {
+            "type": "string"
+          },
+          "product_name": {
+            "type": "string"
+          },
+          "delivered_at": {
+            "type": "string"
+          },
+          "created_at": {
+            "type": "string"
+          }
+        }
+      },
+      "Error": {
+        "properties": {
+          "message": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "requestBodies": {
+      "Account": {
+        "required": true,
+        "content": {
+          "application/json": {
+            "schema": {
+              "allOf": [
+                {
+                  "title": "Client",
+                  "required": [
+                    "username",
+                    "password"
+                  ]
+                },
+                {
+                  "$ref": "#/components/schemas/Account"
+                }
+              ]
+            },
+            "example": {
+              "username": "johndoe",
+              "password": "123456"
+            }
+          }
+        }
+      }
+    },
+    "responses": {
+      "AuthenticationError": {
+        "description": "Missing or invalid authentication token",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/Error"
+            },
+            "examples": {
+              "Missing authentication token": {
+                "value": {
+                  "message": "Missing authentication token"
+                }
+              },
+              "Invalid authentication token": {
+                "value": {
+                  "message": "Invalid authentication token"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "securitySchemes": {
+      "bearer": {
+        "scheme": "bearer",
+        "type": "http"
+      }
+    }
+  }
+}
