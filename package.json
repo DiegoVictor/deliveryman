@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "license": "MIT",
   "scripts": {
-    "dev:server": "ts-node-dev --exit-child --transpile-only --ignore-watch node_modules src/shared/http/server.ts",
+    "dev:server": "ts-node-dev --exit-child --transpile-only --ignore-watch node_modules src/shared/infra/http/server.ts",
     "build": "tsc",
     "test": "jest"
   },
