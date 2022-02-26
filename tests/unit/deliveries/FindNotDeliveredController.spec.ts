@@ -1,10 +1,9 @@
 import { getMockReq, getMockRes } from '@jest-mock/express';
+import faker from 'faker';
 
 import factory from '../../utils/factory';
-import { prisma } from '../../../src/shared/infra/prisma/client';
 import { FindNotDeliveredController } from '../../../src/modules/deliveries/useCases/findNotDelivered/FindNotDeliveredController';
 import { IDelivery } from '../../../src/modules/deliveries/contracts/IDelivery';
-import { IAccount } from '../../../src/modules/accounts/contracts/IAccount';
 
 const execute = jest.fn(async () => ({}));
 jest.mock(
@@ -23,11 +22,8 @@ jest.mock(
 describe('FindNotDeliveredController', () => {
   it('should be able to find not delivered items', async () => {
     const request = getMockReq();
-    const client = await factory.attrs<IAccount>('Account');
-    const { id: client_id } = await prisma.clients.create({
-      data: client,
-    });
 
+    const client_id = faker.datatype.uuid();
     const deliveries = await factory.attrsMany<IDelivery>('Delivery', 5, {
       client_id,
     });
