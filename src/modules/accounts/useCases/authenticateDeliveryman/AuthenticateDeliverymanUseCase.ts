@@ -2,8 +2,8 @@ import { badRequest } from '@hapi/boom';
 import { compare } from 'bcrypt';
 import { sign } from 'jsonwebtoken';
 
-import { IAccount } from '../../contracts/IAccount';
-import { IDeliverymanRepository } from '../../contracts/IDeliverymanRepository';
+import { IAccount } from '@modules/accounts/contracts/IAccount';
+import { IDeliverymanRepository } from '@modules/accounts/contracts/IDeliverymanRepository';
 
 export class AuthenticateDeliverymanUseCase {
   private repository: IDeliverymanRepository;

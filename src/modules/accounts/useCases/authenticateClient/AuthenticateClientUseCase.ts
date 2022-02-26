@@ -2,8 +2,8 @@ import { badRequest } from '@hapi/boom';
 import { compare } from 'bcrypt';
 import { sign } from 'jsonwebtoken';
 
-import { IAccount } from '../../contracts/IAccount';
-import { IClientRepository } from '../../contracts/IClientRepository';
+import { IAccount } from '@modules/accounts/contracts/IAccount';
+import { IClientRepository } from '@modules/accounts/contracts/IClientRepository';
 
 export class AuthenticateClientUseCase {
   private repository: IClientRepository;

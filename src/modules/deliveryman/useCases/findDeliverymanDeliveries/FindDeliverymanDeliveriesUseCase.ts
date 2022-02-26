@@ -1,4 +1,4 @@
-import { IDeliverymanRepository } from '../../../accounts/contracts/IDeliverymanRepository';
+import { IDeliverymanRepository } from '@modules/accounts/contracts/IDeliverymanRepository';
 
 export class FindDeliverymanDeliveriesUseCase {
   private repository: IDeliverymanRepository;

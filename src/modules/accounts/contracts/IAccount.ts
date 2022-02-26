@@ -1,4 +1,4 @@
-import { IDelivery } from '../../deliveries/contracts/IDelivery';
+import { IDelivery } from '@modules/deliveries/contracts/IDelivery';
 
 export interface IAccount {
   id?: string;

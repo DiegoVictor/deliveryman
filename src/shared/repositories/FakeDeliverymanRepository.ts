@@ -1,7 +1,7 @@
 import { randomUUID } from 'crypto';
 
-import { IAccount } from '../../modules/accounts/contracts/IAccount';
-import { IDeliverymanRepository } from '../../modules/accounts/contracts/IDeliverymanRepository';
+import { IAccount } from '@modules/accounts/contracts/IAccount';
+import { IDeliverymanRepository } from '@modules/accounts/contracts/IDeliverymanRepository';
 
 export class FakeDeliverymanRepository implements IDeliverymanRepository {
   private repository: IAccount[] = [];

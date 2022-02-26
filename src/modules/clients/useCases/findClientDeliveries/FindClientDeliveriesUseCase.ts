@@ -1,4 +1,4 @@
-import { IClientRepository } from '../../../accounts/contracts/IClientRepository';
+import { IClientRepository } from '@modules/accounts/contracts/IClientRepository';
 
 export class FindClientDeliveriesUseCase {
   private repository: IClientRepository;

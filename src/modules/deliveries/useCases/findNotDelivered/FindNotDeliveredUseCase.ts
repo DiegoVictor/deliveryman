@@ -1,4 +1,4 @@
-import { IDeliveryRepository } from '../../contracts/IDeliveryRepository';
+import { IDeliveryRepository } from '@modules/deliveries/contracts/IDeliveryRepository';
 
 export class FindNotDeliveredUseCase {
   private repository: IDeliveryRepository;

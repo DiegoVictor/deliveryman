@@ -1,8 +1,8 @@
 import { badRequest } from '@hapi/boom';
 import { hash } from 'bcrypt';
 
-import { IAccount } from '../../../accounts/contracts/IAccount';
-import { IClientRepository } from '../../../accounts/contracts/IClientRepository';
+import { IAccount } from '@modules/accounts/contracts/IAccount';
+import { IClientRepository } from '@modules/accounts/contracts/IClientRepository';
 
 export class CreateClientUseCase {
   private repository: IClientRepository;

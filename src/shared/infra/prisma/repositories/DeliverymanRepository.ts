@@ -1,5 +1,5 @@
-import { IAccount } from '../../../../modules/accounts/contracts/IAccount';
-import { IDeliverymanRepository } from '../../../../modules/accounts/contracts/IDeliverymanRepository';
+import { IAccount } from '@modules/accounts/contracts/IAccount';
+import { IDeliverymanRepository } from '@modules/accounts/contracts/IDeliverymanRepository';
 import { prisma } from '../client';
 
 export class DeliverymanRepository implements IDeliverymanRepository {

@@ -1,6 +1,6 @@
 import { prisma } from '../../../../../shared/infra/prisma/client';
-import { IDelivery } from '../../../contracts/IDelivery';
-import { IDeliveryRepository } from '../../../contracts/IDeliveryRepository';
+import { IDelivery } from '@modules/deliveries/contracts/IDelivery';
+import { IDeliveryRepository } from '@modules/deliveries/contracts/IDeliveryRepository';
 
 export class DeliveryRepository implements IDeliveryRepository {
   async updateById(id: string, data: Partial<IDelivery>) {

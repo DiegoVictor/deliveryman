@@ -1,6 +1,6 @@
 import { Request, Response } from 'express';
-import { ClientRepository } from '../../../../shared/infra/prisma/repositories/ClientRepository';
 
+import { ClientRepository } from '@repositories/ClientRepository';
 import { CreateClientUseCase } from './CreateClientUseCase';
 
 export class CreateClientController {

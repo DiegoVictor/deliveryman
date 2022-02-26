@@ -1,8 +1,8 @@
 import { Prisma } from '.prisma/client';
 import { randomUUID } from 'crypto';
 
-import { IDelivery } from '../contracts/IDelivery';
-import { IDeliveryRepository } from '../contracts/IDeliveryRepository';
+import { IDelivery } from '@modules/deliveries/contracts/IDelivery';
+import { IDeliveryRepository } from '@modules/deliveries/contracts/IDeliveryRepository';
 
 export class FakeDeliveryRepository implements IDeliveryRepository {
   private repository: IDelivery[] = [];

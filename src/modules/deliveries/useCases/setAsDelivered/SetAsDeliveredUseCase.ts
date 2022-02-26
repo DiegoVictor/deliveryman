@@ -1,5 +1,5 @@
-import { IDelivery } from '../../contracts/IDelivery';
-import { IDeliveryRepository } from '../../contracts/IDeliveryRepository';
+import { IDelivery } from '@modules/deliveries/contracts/IDelivery';
+import { IDeliveryRepository } from '@modules/deliveries/contracts/IDeliveryRepository';
 
 export class SetAsDeliveredUseCase {
   private repository: IDeliveryRepository;

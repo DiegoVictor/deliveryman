@@ -1,6 +1,6 @@
 import { Request, Response } from 'express';
 
-import { DeliverymanRepository } from '../../../../shared/infra/prisma/repositories/DeliverymanRepository';
+import { DeliverymanRepository } from '@repositories/DeliverymanRepository';
 import { CreateDeliverymanUseCase } from './CreateDeliverymanUseCase';
 
 export class CreateDeliverymanController {

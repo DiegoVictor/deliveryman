@@ -1,10 +1,10 @@
 import { Router } from 'express';
 
-import { AuthenticateDeliverymanController } from '../../../../modules/accounts/useCases/authenticateDeliveryman/AuthenticateDeliverymanController';
-import { CreateDeliverymanController } from '../../../../modules/deliveryman/useCases/createDeliveryman/CreateDeliverymanController';
-import { usernameAndPasswordValidator } from '../validators/usernameAndPassword';
-import { ensureDeliverymanAuthentication } from '../middlewares/ensureDeliverymanAuthentication';
-import { FindDeliverymanDeliveriesController } from '../../../../modules/deliveryman/useCases/findDeliverymanDeliveries/FindDeliverymanDeliveriesController';
+import { AuthenticateDeliverymanController } from '@modules/accounts/useCases/authenticateDeliveryman/AuthenticateDeliverymanController';
+import { CreateDeliverymanController } from '@modules/deliveryman/useCases/createDeliveryman/CreateDeliverymanController';
+import { usernameAndPasswordValidator } from '@validators/usernameAndPassword';
+import { ensureDeliverymanAuthentication } from '@middlewares/ensureDeliverymanAuthentication';
+import { FindDeliverymanDeliveriesController } from '@modules/deliveryman/useCases/findDeliverymanDeliveries/FindDeliverymanDeliveriesController';
 
 const app = Router();
 

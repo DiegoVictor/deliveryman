@@ -1,8 +1,8 @@
 import { badRequest } from '@hapi/boom';
 import { hash } from 'bcrypt';
 
-import { IAccount } from '../../../accounts/contracts/IAccount';
-import { IDeliverymanRepository } from '../../../accounts/contracts/IDeliverymanRepository';
+import { IAccount } from '@modules/accounts/contracts/IAccount';
+import { IDeliverymanRepository } from '@modules/accounts/contracts/IDeliverymanRepository';
 
 export class CreateDeliverymanUseCase {
   private repository: IDeliverymanRepository;
