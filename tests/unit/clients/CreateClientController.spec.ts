@@ -1,6 +1,6 @@
 import { getMockReq, getMockRes } from '@jest-mock/express';
 import { hash } from 'bcrypt';
-import { randomUUID } from 'crypto';
+import { v4 as uuid } from 'uuid';
 
 import factory from '../../utils/factory';
 import { IAccount } from '../../../src/modules/accounts/contracts/IAccount';
@@ -28,7 +28,7 @@ describe('CreateClientController', () => {
     const { res: response } = getMockRes();
     const createClientController = new CreateClientController();
 
-    const id = randomUUID();
+    const id = uuid();
     const passwordHash = await hash(client.password, 10);
     execute.mockReturnValue(
       Promise.resolve({

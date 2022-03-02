@@ -1,5 +1,3 @@
-import faker from 'faker';
-
 import factory from '../../utils/factory';
 import { CreateDeliveryUseCase } from '../../../src/modules/deliveries/useCases/createDelivery/CreateDeliveryUseCase';
 import { FakeDeliveryRepository } from '../../../src/modules/deliveries/repositories/FakeDeliveryRepository';

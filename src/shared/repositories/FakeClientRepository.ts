@@ -1,4 +1,4 @@
-import { randomUUID } from 'crypto';
+import { v4 as uuid } from 'uuid';
 
 import { IAccount } from '@modules/accounts/contracts/IAccount';
 import { IClientRepository } from '@modules/accounts/contracts/IClientRepository';
@@ -30,7 +30,7 @@ export class FakeClientRepository implements IClientRepository {
 
   async create({ username, password }: IAccount): Promise<IAccount> {
     const client = {
-      id: randomUUID(),
+      id: uuid(),
       username,
       password,
     };

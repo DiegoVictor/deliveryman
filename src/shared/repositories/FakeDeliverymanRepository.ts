@@ -1,4 +1,4 @@
-import { randomUUID } from 'crypto';
+import { v4 as uuid } from 'uuid';
 
 import { IAccount } from '@modules/accounts/contracts/IAccount';
 import { IDeliverymanRepository } from '@modules/accounts/contracts/IDeliverymanRepository';
@@ -34,7 +34,7 @@ export class FakeDeliverymanRepository implements IDeliverymanRepository {
 
   async create({ username, password }: IAccount): Promise<IAccount> {
     const deliveryman = {
-      id: randomUUID(),
+      id: uuid(),
       username,
       password,
     };

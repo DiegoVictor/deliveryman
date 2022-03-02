@@ -1,5 +1,5 @@
 import { getMockReq, getMockRes } from '@jest-mock/express';
-import { randomUUID } from 'crypto';
+import { v4 as uuid } from 'uuid';
 
 import { SetDeliveryDeliverymanController } from '../../../src/modules/deliveries/useCases/setDeliveryDeliveryman/SetDeliveryDeliverymanController';
 import { IDelivery } from '../../../src/modules/deliveries/contracts/IDelivery';
@@ -20,8 +20,8 @@ jest.mock(
 
 describe('SetDeliveryDeliverymanController', () => {
   it("should be able to set delivery's deliveryman", async () => {
-    const id = randomUUID();
-    const deliveryman_id = randomUUID();
+    const id = uuid();
+    const deliveryman_id = uuid();
     const request = getMockReq({
       deliveryman_id,
       params: {

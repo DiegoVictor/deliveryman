@@ -1,4 +1,4 @@
-import { randomUUID } from 'crypto';
+import { v4 as uuid } from 'uuid';
 
 import { IDelivery } from '@modules/deliveries/contracts/IDelivery';
 import { IDeliveryRepository } from '@modules/deliveries/contracts/IDeliveryRepository';
@@ -33,7 +33,7 @@ export class FakeDeliveryRepository implements IDeliveryRepository {
     Pick<IDelivery, 'client_id' | 'product_name'>
   >): Promise<IDelivery> {
     const delivery = {
-      id: randomUUID(),
+      id: uuid(),
       client_id,
       product_name,
       delivered_at: null,

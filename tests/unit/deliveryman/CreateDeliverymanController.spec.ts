@@ -1,6 +1,6 @@
 import { getMockReq, getMockRes } from '@jest-mock/express';
 import { hash } from 'bcrypt';
-import { randomUUID } from 'crypto';
+import { v4 as uuid } from 'uuid';
 
 import factory from '../../utils/factory';
 import { CreateDeliverymanController } from '../../../src/modules/deliveryman/useCases/createDeliveryman/CreateDeliverymanController';
@@ -28,7 +28,7 @@ describe('CreateDeliverymanController', () => {
     const { res: response } = getMockRes();
     const createDeliverymanController = new CreateDeliverymanController();
 
-    const id = randomUUID();
+    const id = uuid();
     const passwordHash = await hash(client.password, 10);
     execute.mockReturnValue(
       Promise.resolve({

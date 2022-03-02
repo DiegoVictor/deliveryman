@@ -1,5 +1,5 @@
 import { getMockReq, getMockRes } from '@jest-mock/express';
-import { randomUUID } from 'crypto';
+import { v4 as uuid } from 'uuid';
 
 import factory from '../../utils/factory';
 import { IDelivery } from '../../../src/modules/deliveries/contracts/IDelivery';
@@ -22,12 +22,12 @@ jest.mock(
 
 describe('FindDeliverymanDeliveriesController', () => {
   it("should be able to find deliveryman's deliveries", async () => {
-    const deliveryman_id = randomUUID();
+    const deliveryman_id = uuid();
     const deliveryman = await factory.attrs<IAccount>('Account', {
       id: deliveryman_id,
     });
     const deliveries = await factory.attrsMany<IDelivery>('Delivery', 5, {
-      id: randomUUID,
+      id: uuid,
       deliveryman_id,
     });
     const request = getMockReq({ deliveryman_id });

@@ -1,6 +1,6 @@
 import { getMockReq, getMockRes } from '@jest-mock/express';
 import faker from 'faker';
-import { randomUUID } from 'crypto';
+import { v4 as uuid } from 'uuid';
 
 import { CreateDeliveryController } from '../../../src/modules/deliveries/useCases/createDelivery/CreateDeliveryController';
 
@@ -36,7 +36,7 @@ describe('CreateDeliveryController', () => {
 
     const { res: response } = getMockRes();
     const createDeliveryController = new CreateDeliveryController();
-    const id = randomUUID();
+    const id = uuid();
     const created_at = new Date();
     execute.mockReturnValue(
       Promise.resolve({

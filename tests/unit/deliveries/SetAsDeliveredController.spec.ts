@@ -1,5 +1,5 @@
 import { getMockReq, getMockRes } from '@jest-mock/express';
-import { randomUUID } from 'crypto';
+import { v4 as uuid } from 'uuid';
 
 import { SetAsDeliveredController } from '../../../src/modules/deliveries/useCases/setAsDelivered/SetAsDeliveredController';
 
@@ -19,7 +19,7 @@ jest.mock(
 
 describe('SetAsDeliveredController', () => {
   it('should be able to set delivery as delivered', async () => {
-    const request = getMockReq({ deliveryman_id: randomUUID() });
+    const request = getMockReq({ deliveryman_id: uuid() });
 
     const { res: response } = getMockRes();
     const setAsDeliveredController = new SetAsDeliveredController();
