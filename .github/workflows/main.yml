@@ -11,8 +11,8 @@ jobs:
       postgres:
         image: postgres
         env:
-          POSTGRES_PASSWORD: docker
-          POSTGRES_DB: deliveryman
+          POSTGRES_PASSWORD: ${{ secrets.POSTGRES_PASSWORD }}
+          POSTGRES_DB: ${{ secrets.POSTGRES_DB }}
     steps:
       - name: Setup Node.js
         uses: actions/setup-node@v1
@@ -22,7 +22,7 @@ jobs:
       - name: Checkout Code
         uses: actions/checkout@v2
 
-      - name: Install Packages And Run Tests
+      - name: Install Packages And Run Unit Tests
         run: |
           npm install
           npm run test
@@ -36,14 +36,21 @@ jobs:
         with:
           inso-version: 2.4.0
 
+      - name: Run Migrations And Application
+        env:
+          DATABASE_URL: "postgresql://postgres:${{ secrets.POSTGRES_PASSWORD }}@localhost:5432/${{ secrets.POSTGRES_DB }}?schema=public"
+        run: |
+          npx prisma migrate deploy
+          docker-compose up -d app
+
       - name: Run Integration Tests
         env:
           PORT: 3333
           JWT_CLIENT_SECRET: ${{ secrets.JWT_CLIENT_SECRET }}
           JWT_DELIVERYMAN_SECRET: ${{ secrets.JWT_DELIVERYMAN_SECRET }}
           JWT_EXPIRATION: "1d"
-          DATABASE_URL: "postgresql://postgres:docker@localhost:5432/deliveryman?schema=public"
+          DATABASE_URL: "postgresql://postgres:${{ secrets.POSTGRES_PASSWORD }}@localhost:5432/${{ secrets.POSTGRES_DB }}?schema=public"
           DOCS_URL: "https://github.com/DiegoVictor/deliveryman#errors-reference"
         run: |
-          npm run dev:server
+          docker-compose up -d app
           inso run test --src="Insomnia_2022-03-02.json" "Deliveryman" --env "UnitTest" --ci
