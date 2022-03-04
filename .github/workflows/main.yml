@@ -37,4 +37,13 @@ jobs:
           inso-version: 2.4.0
 
       - name: Run Integration Tests
-        run: inso run test --src="Insomnia_2022-03-02.json" "Deliveryman" --env "UnitTest" --ci
+        env:
+          PORT: 3333
+          JWT_CLIENT_SECRET: ${{ secrets.JWT_CLIENT_SECRET }}
+          JWT_DELIVERYMAN_SECRET: ${{ secrets.JWT_DELIVERYMAN_SECRET }}
+          JWT_EXPIRATION: "1d"
+          DATABASE_URL: "postgresql://postgres:docker@localhost:5432/deliveryman?schema=public"
+          DOCS_URL: "https://github.com/DiegoVictor/deliveryman#errors-reference"
+        run: |
+          npm run dev:server
+          inso run test --src="Insomnia_2022-03-02.json" "Deliveryman" --env "UnitTest" --ci
