@@ -7,13 +7,6 @@ on:
 jobs:
   tests:
     runs-on: ubuntu-latest
-    services:
-      postgres:
-        image: postgres
-        env:
-          POSTGRES_PASSWORD: ${{ secrets.POSTGRES_PASSWORD }}
-        ports:
-          - 5432:5432
     steps:
       - name: Setup Node.js
         uses: actions/setup-node@v1
@@ -37,21 +30,15 @@ jobs:
         with:
           inso-version: 2.4.0
 
-      - name: Setup Application
-        env:
-          DATABASE_URL: "postgresql://postgres:${{ secrets.POSTGRES_PASSWORD }}@localhost:5432/deliveryman?schema=public"
-        run: |
-          npx prisma migrate deploy
-          docker-compose up -d app
-
-      - name: Run Integration Tests
+      - name: Setup Application and Run Integration Tests
         env:
           PORT: 3333
           JWT_CLIENT_SECRET: ${{ secrets.JWT_CLIENT_SECRET }}
           JWT_DELIVERYMAN_SECRET: ${{ secrets.JWT_DELIVERYMAN_SECRET }}
           JWT_EXPIRATION: "1d"
-          DATABASE_URL: "postgresql://postgres:${{ secrets.POSTGRES_PASSWORD }}@localhost:5432/deliveryman?schema=public"
+          DATABASE_URL: "postgresql://postgres:docker@localhost:5432/deliveryman?schema=public"
           DOCS_URL: "https://github.com/DiegoVictor/deliveryman#errors-reference"
         run: |
-          docker-compose up -d app
+          docker-compose up -d
+          npx prisma migrate deploy
           inso run test --src="Insomnia_2022-03-02.json" "Deliveryman" --env "UnitTest" --ci
