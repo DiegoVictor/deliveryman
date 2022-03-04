@@ -1,7 +1,7 @@
 FROM node:12
 RUN mkdir /usr/src/app
 WORKDIR /usr/src/app
-COPY package*.json .
+COPY package*.json ./
 RUN npm install
 EXPOSE 3333
 COPY . .
