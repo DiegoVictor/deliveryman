@@ -31,4 +31,4 @@ jobs:
           inso-version: 2.4.0
 
       - name: Run Integration Tests
-        run: inso run test "Deliveryman" --env "OpenAPI env" --ci
+        run: inso run test --src="Insomnia_2022-03-02.json" "Deliveryman" --env "UnitTest" --ci
