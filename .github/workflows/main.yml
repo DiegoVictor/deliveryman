@@ -10,7 +10,7 @@ jobs:
     services:
       postgres:
         image: postgres
-        environment:
+        env:
           POSTGRES_PASSWORD: docker
           POSTGRES_DB: deliveryman
     steps:
