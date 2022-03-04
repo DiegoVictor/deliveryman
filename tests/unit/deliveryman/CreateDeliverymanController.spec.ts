@@ -20,6 +20,15 @@ jest.mock(
   }
 );
 
+jest.mock(
+  '../../../src/shared/infra/prisma/repositories/DeliverymanRepository',
+  () => {
+    return {
+      DeliverymanRepository: class Fake {},
+    };
+  }
+);
+
 describe('CreateDeliverymanController', () => {
   it('should be able to create a new client', async () => {
     const client = await factory.attrs<IAccount>('Account');

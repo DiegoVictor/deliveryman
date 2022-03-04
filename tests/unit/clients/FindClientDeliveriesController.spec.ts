@@ -19,6 +19,14 @@ jest.mock(
     };
   }
 );
+jest.mock(
+  '../../../src/shared/infra/prisma/repositories/ClientRepository',
+  () => {
+    return {
+      ClientRepository: class Fake {},
+    };
+  }
+);
 
 describe('FindClientDeliveriesController', () => {
   it("should be able to find clients' deliveries", async () => {

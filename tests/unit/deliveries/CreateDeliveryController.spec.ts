@@ -22,6 +22,14 @@ jest.mock(
     };
   }
 );
+jest.mock(
+  '../../../src/modules/deliveries/infra/prisma/repositories/DeliveryRepository',
+  () => {
+    return {
+      DeliveryRepository: class Fake {},
+    };
+  }
+);
 
 describe('CreateDeliveryController', () => {
   it('should be able to create a new delivery', async () => {

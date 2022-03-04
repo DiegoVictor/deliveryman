@@ -18,6 +18,14 @@ jest.mock(
     };
   }
 );
+jest.mock(
+  '../../../src/modules/deliveries/infra/prisma/repositories/DeliveryRepository',
+  () => {
+    return {
+      DeliveryRepository: class Fake {},
+    };
+  }
+);
 
 describe('FindNotDeliveredController', () => {
   it('should be able to find not delivered items', async () => {

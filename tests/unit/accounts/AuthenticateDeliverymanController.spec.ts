@@ -18,6 +18,14 @@ jest.mock(
     };
   }
 );
+jest.mock(
+  '../../../src/shared/infra/prisma/repositories/DeliverymanRepository',
+  () => {
+    return {
+      DeliverymanRepository: class Fake {},
+    };
+  }
+);
 
 describe('AuthenticateDeliverymanController', () => {
   it('should be able to authenticate deliveryman', async () => {
