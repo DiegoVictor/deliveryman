@@ -37,7 +37,7 @@ jobs:
         with:
           inso-version: 2.4.0
 
-      - name: Run Migrations And Application
+      - name: Setup Application
         env:
           DATABASE_URL: "postgresql://postgres:${{ secrets.POSTGRES_PASSWORD }}@localhost:5432/deliveryman?schema=public"
         run: |
