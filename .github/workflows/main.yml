@@ -7,6 +7,12 @@ on:
 jobs:
   tests:
     runs-on: ubuntu-latest
+    services:
+      postgres:
+        image: postgres
+        environment:
+          POSTGRES_PASSWORD: docker
+          POSTGRES_DB: deliveryman
     steps:
       - name: Setup Node.js
         uses: actions/setup-node@v1
