@@ -13,6 +13,16 @@ services:
       - pgdata:/var/lib/postgresql/data
     networks:
       - app_network
+  app:
+    build: .
+    depends_on:
+      - postgres
+    ports:
+      - 3333:3333
+    volumes:
+      - .:/usr/src/app
+    networks:
+      - app_network
 volumes:
   pgdata:
     driver: local
