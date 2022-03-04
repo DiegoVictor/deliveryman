@@ -38,7 +38,7 @@ jobs:
 
       - name: Run Migrations And Application
         env:
-          DATABASE_URL: "postgresql://postgres:${{ secrets.POSTGRES_PASSWORD }}@localhost:5432/${{ secrets.POSTGRES_DB }}?schema=public"
+          DATABASE_URL: "postgresql://postgres:${{ secrets.POSTGRES_PASSWORD }}@postgres:5432/${{ secrets.POSTGRES_DB }}?schema=public"
         run: |
           npx prisma migrate deploy
           docker-compose up -d app
@@ -49,7 +49,7 @@ jobs:
           JWT_CLIENT_SECRET: ${{ secrets.JWT_CLIENT_SECRET }}
           JWT_DELIVERYMAN_SECRET: ${{ secrets.JWT_DELIVERYMAN_SECRET }}
           JWT_EXPIRATION: "1d"
-          DATABASE_URL: "postgresql://postgres:${{ secrets.POSTGRES_PASSWORD }}@localhost:5432/${{ secrets.POSTGRES_DB }}?schema=public"
+          DATABASE_URL: "postgresql://postgres:${{ secrets.POSTGRES_PASSWORD }}@postgres:5432/${{ secrets.POSTGRES_DB }}?schema=public"
           DOCS_URL: "https://github.com/DiegoVictor/deliveryman#errors-reference"
         run: |
           docker-compose up -d app
