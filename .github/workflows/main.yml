@@ -29,6 +29,7 @@ jobs:
 
   integration-test:
     runs-on: ubuntu-latest
+    steps:
       - name: Setup job
         uses: actions/setup-node@v1
         with:
