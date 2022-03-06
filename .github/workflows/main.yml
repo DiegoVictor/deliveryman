@@ -58,7 +58,7 @@ jobs:
           printf "PORT=3333\n\nJWT_CLIENT_SECRET=$JWT_CLIENT_SECRET\nJWT_DELIVERYMAN_SECRET=$JWT_DELIVERYMAN_SECRET\nJWT_EXPIRATION=1d\n\nDATABASE_URL="postgresql://postgres:docker@postgres:5432/deliveryman?schema=public"\n\nDOCS_URL=https://github.com/DiegoVictor/deliveryman#errors-reference" > .env
 
       - name: Run application container
-        run: docker-compose up --force-recreate -d app
+        run: docker-compose up -d app
 
       - name: Check containers
         run: docker-compose ps -a
