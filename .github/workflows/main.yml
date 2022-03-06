@@ -8,37 +8,41 @@ jobs:
   tests:
     runs-on: ubuntu-latest
     steps:
-      - name: Setup Node.js
+      - name: Setup job
         uses: actions/setup-node@v1
         with:
           node-version: '12'
 
-      - name: Checkout Code
         uses: actions/checkout@v2
-
-      - name: Install Packages And Run Unit Tests
-        run: |
-          npm install
-          npm run test
-
-      - name: Send Coverage
-        uses: codecov/codecov-action@v1
-        with:
-          directory: ./tests/coverage/
 
       - uses: kong/setup-inso@v1
         with:
           inso-version: 2.4.0
 
-      - name: Setup Application and Run Integration Tests
+      - name: Set up environment variables
         env:
-          PORT: 3333
           JWT_CLIENT_SECRET: ${{ secrets.JWT_CLIENT_SECRET }}
           JWT_DELIVERYMAN_SECRET: ${{ secrets.JWT_DELIVERYMAN_SECRET }}
-          JWT_EXPIRATION: "1d"
-          DATABASE_URL: "postgresql://postgres:docker@localhost:5432/deliveryman?schema=public"
-          DOCS_URL: "https://github.com/DiegoVictor/deliveryman#errors-reference"
         run: |
-          docker-compose up -d
-          npx prisma migrate deploy
-          inso run test --src="Insomnia_2022-03-02.json" "Deliveryman" --env "UnitTest" --ci
+          sed '/JWT_DELIVERYMAN_SECRET=\|JWT_CLIENT_SECRET=/d' .env.example > .env
+          echo "JWT_CLIENT_SECRET=$JWT_CLIENT_SECRET" >> .env
+          echo "JWT_DELIVERYMAN_SECRET=$JWT_DELIVERYMAN_SECRET" >> .env
+
+      - name: Run unit tests
+        run: npm install && npm run test
+
+      - name: Codecov
+        uses: codecov/codecov-action@v1
+        with:
+          directory: ./tests/coverage/
+
+      - run: docker-compose up -d
+
+      - name: Check containers
+        run: docker-compose ps -a
+
+      - name: Run migrations
+        run: npx prisma migrate deploy
+
+      - name: Run insomnia tests
+        run: inso run test --src="Insomnia_2022-03-02.json" "Deliveryman" --env "UnitTest" --ci
