@@ -1,5 +1,5 @@
 # Deliveryman
-![CircleCI](https://img.shields.io/circleci/build/github/DiegoVictor/deliveryman?style=flat-square&logo=circleci)
+[![GitHub Workflow Status](https://img.shields.io/github/workflow/status/DiegoVictor/deliveryman/main?logo=github&style=flat-square)](https://github.com/DiegoVictor/deliveryman/actions)
 [![typescript](https://img.shields.io/badge/typescript-4.5.5-3178c6?style=flat-square&logo=typescript)](https://www.typescriptlang.org/)
 [![prisma](https://img.shields.io/badge/prisma-3.10.0-326690?style=flat-square&logo=prisma&logoColor=white)](https://www.prisma.io/)
 [![eslint](https://img.shields.io/badge/eslint-8.9.0-4b32c3?style=flat-square&logo=eslint)](https://eslint.org/)
