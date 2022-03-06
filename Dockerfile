@@ -5,4 +5,5 @@ COPY package*.json ./
 RUN npm install
 EXPOSE 3333
 COPY . .
+RUN npx prisma generate
 CMD ["npm", "run", "dev:server"]
