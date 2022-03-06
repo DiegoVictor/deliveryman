@@ -5,7 +5,7 @@
   "scripts": {
     "dev:server": "ts-node-dev -r tsconfig-paths/register --exit-child --transpile-only --ignore-watch node_modules src/shared/infra/http/server.ts",
     "build": "tsc",
-    "test": "jest"
+    "test": "jest --runInBand"
   },
   "devDependencies": {
     "@jest-mock/express": "^1.4.5",
@@ -38,6 +38,7 @@
     "@hapi/boom": "^9.1.4",
     "@prisma/client": "^3.7.0",
     "bcrypt": "^5.0.1",
+    "brcypt": "^1.0.1",
     "cors": "^2.8.5",
     "express": "^4.17.2",
     "express-async-errors": "^3.1.1",
