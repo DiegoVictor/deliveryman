@@ -1,5 +1,5 @@
 import { getMockReq, getMockRes } from '@jest-mock/express';
-import faker from 'faker';
+import faker from '@faker-js/faker';
 import { v4 as uuid } from 'uuid';
 
 import { CreateDeliveryController } from '../../../src/modules/deliveries/useCases/createDelivery/CreateDeliveryController';

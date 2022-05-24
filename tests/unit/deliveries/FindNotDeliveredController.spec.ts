@@ -1,5 +1,5 @@
 import { getMockReq, getMockRes } from '@jest-mock/express';
-import faker from 'faker';
+import faker from '@faker-js/faker';
 
 import factory from '../../utils/factory';
 import { FindNotDeliveredController } from '../../../src/modules/deliveries/useCases/findNotDelivered/FindNotDeliveredController';

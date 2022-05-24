@@ -1,4 +1,4 @@
-import faker from 'faker';
+import faker from '@faker-js/faker';
 import factory from 'factory-girl';
 
 import { IDelivery } from '../../src/modules/deliveries/contracts/IDelivery';

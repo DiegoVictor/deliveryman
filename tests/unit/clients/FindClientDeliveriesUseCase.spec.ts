@@ -1,4 +1,4 @@
-import faker from 'faker';
+import faker from '@faker-js/faker';
 
 import { FindClientDeliveriesUseCase } from '../../../src/modules/clients/useCases/findClientDeliveries/FindClientDeliveriesUseCase';
 import factory from '../../utils/factory';

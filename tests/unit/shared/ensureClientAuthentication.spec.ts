@@ -1,6 +1,6 @@
 import { badRequest, unauthorized } from '@hapi/boom';
 import { getMockReq, getMockRes } from '@jest-mock/express';
-import faker from 'faker';
+import faker from '@faker-js/faker';
 import { sign } from 'jsonwebtoken';
 
 import { ensureClientAuthentication } from '../../../src/shared/infra/http/middlewares/ensureClientAuthentication';
