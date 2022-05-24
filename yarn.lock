@@ -1186,6 +1186,11 @@ braces@^3.0.1, braces@~3.0.2:
   dependencies:
     fill-range "^7.0.1"
 
+brcypt@^1.0.1:
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/brcypt/-/brcypt-1.0.1.tgz#2fe5788f85c2624cff1c7a861b586f8dbbc7fc7e"
+  integrity sha512-DjzcKFxx3g3F5PPYVNIzIpyAT15WDiJSzCeg5Fa840uI0N3E+RyRhDu5nIkSTbXydqy5F95KgnI/co2LhxCFEA==
+
 browser-process-hrtime@^1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/browser-process-hrtime/-/browser-process-hrtime-1.0.0.tgz#3c9b4b7d782c8121e56f10106d84c0d0ffc94626"
