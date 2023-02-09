@@ -41,7 +41,7 @@ jobs:
 
       - uses: kong/setup-inso@v1
         with:
-          inso-version: 2.4.0
+          inso-version: 3.5.0
 
       - name: Start database container
         run: docker-compose up --force-recreate -d postgres
