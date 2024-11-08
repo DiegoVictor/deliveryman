@@ -26,6 +26,8 @@ jobs:
         uses: codecov/codecov-action@v4
         with:
           directory: ./tests/coverage/
+        env:
+          CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
 
   integration-test:
     runs-on: ubuntu-latest
