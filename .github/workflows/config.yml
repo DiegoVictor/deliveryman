@@ -32,6 +32,19 @@ jobs:
   integration-test:
     runs-on: ubuntu-latest
     needs: unit-test
+    services:
+      postgres:
+        image: postgres
+        env:
+          POSTGRES_PASSWORD: docker
+          POSTGRES_DB: deliveryman
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+        ports:
+          - 5432:5432
     steps:
       - name: Setup job
         uses: actions/setup-node@v4
@@ -45,28 +58,26 @@ jobs:
         with:
           inso-version: 3.5.0
 
-      - name: Start database container
-        run: docker-compose up --force-recreate -d postgres
+      - name: Install dependecies
+        run: npm ci
 
       - name: Run migrations
-        run: |
-          echo "DATABASE_URL=postgresql://postgres:docker@localhost:5432/deliveryman?schema=public" > .env
-          npx prisma migrate deploy
+        run: npx prisma migrate deploy
+        env:
+          DATABASE_URL: postgresql://postgres:docker@localhost:5432/deliveryman?schema=public
 
-      - name: Set up environment variables
+      - name: Run application
+        run: |
+          npm run build
+          node dist/index.js &
         env:
           JWT_CLIENT_SECRET: ${{ secrets.JWT_CLIENT_SECRET }}
           JWT_DELIVERYMAN_SECRET: ${{ secrets.JWT_DELIVERYMAN_SECRET }}
-        run: |
-          printf "PORT=3333\n\nJWT_CLIENT_SECRET=$JWT_CLIENT_SECRET\nJWT_DELIVERYMAN_SECRET=$JWT_DELIVERYMAN_SECRET\nJWT_EXPIRATION=1d\n\nDATABASE_URL="postgresql://postgres:docker@postgres:5432/deliveryman?schema=public"\n\nDOCS_URL=https://github.com/DiegoVictor/deliveryman#errors-reference" > .env
-
-      - name: Run application container
-        run: docker-compose up -d app
-
-      - name: Check containers
-        run: docker-compose ps -a
+          PORT: 3333
+          JWT_EXPIRATION: 1d
+          DATABASE_URL: postgresql://postgres:docker@localhost:5432/deliveryman?schema=public
+          DOCS_URL: https://github.com/DiegoVictor/deliveryman#errors-reference
 
       - name: Run insomnia tests
         run: |
-          sleep 10
           inso run test --src="Insomnia_2022-03-02.json" "Deliveryman" --env "UnitTest" --ci
