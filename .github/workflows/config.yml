@@ -69,7 +69,7 @@ jobs:
       - name: Run application
         run: |
           npm run build
-          node dist/index.js &
+          node src/dist/shared/infra/http/server.js &
         env:
           JWT_CLIENT_SECRET: ${{ secrets.JWT_CLIENT_SECRET }}
           JWT_DELIVERYMAN_SECRET: ${{ secrets.JWT_DELIVERYMAN_SECRET }}
