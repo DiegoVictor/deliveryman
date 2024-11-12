@@ -76,7 +76,7 @@ jobs:
           PORT: 3333
           JWT_EXPIRATION: 1d
           DATABASE_URL: postgresql://postgres:docker@localhost:5432/deliveryman?schema=public
-          DOCS_URL: https://github.com/DiegoVictor/deliveryman#errors-reference
+          DOCS_URL: "https://github.com/DiegoVictor/deliveryman#errors-reference"
 
       - name: Run insomnia tests
         run: |
