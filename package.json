@@ -4,7 +4,7 @@
   "license": "MIT",
   "scripts": {
     "dev:server": "ts-node-dev -r tsconfig-paths/register --exit-child --transpile-only --ignore-watch node_modules src/shared/infra/http/server.ts",
-    "build": "tsc",
+    "build": "tsc && tsconfig-replace-paths --project tsconfig.json",
     "test": "jest --runInBand"
   },
   "devDependencies": {
