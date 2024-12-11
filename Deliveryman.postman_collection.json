@@ -1,0 +1,696 @@
+{
+	"info": {
+		"_postman_id": "88b64d5a-bd37-4d89-9c7b-8c9cd89b524c",
+		"name": "Deliveryman",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "4346128"
+	},
+	"item": [
+		{
+			"name": "Clients",
+			"item": [
+				{
+					"name": "Deliveries",
+					"item": [
+						{
+							"name": "Store",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test('Returns 201 And Schema Validation', function () {",
+											"    const response1 = pm.response;",
+											"    pm.expect(response1.code).to.equal(201);",
+											"    const data = response1.json();",
+											"    [",
+											"        'id',",
+											"        'client_id',",
+											"        'product_name',",
+											"        'created_at'",
+											"    ].forEach(field => {",
+											"        pm.expect(data).to.have.property(field);",
+											"        pm.expect(data[field]).to.be.an('string');",
+											"    });",
+											"    [",
+											"        'deliveryman_id',",
+											"        'delivered_at'",
+											"    ].forEach(field => {",
+											"        pm.expect(data).to.have.property(field);",
+											"        pm.expect(data[field]).to.equal(null);",
+											"    });",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"protocolProfileBehavior": {
+								"followRedirects": true,
+								"disableUrlEncoding": false,
+								"disableCookies": false
+							},
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"product_name\": \"Cardboard box\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{host}}/clients/deliveries",
+									"host": [
+										"{{host}}"
+									],
+									"path": [
+										"clients",
+										"deliveries"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Index",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test('Client Deliveries: Return 200 And Schema Validation', function () {",
+											"    const response1 = pm.response;",
+											"    pm.expect(response1.code).to.equal(200);",
+											"    const data = response1.json();",
+											"    [",
+											"        'id',",
+											"        'username'",
+											"    ].forEach(field => {",
+											"        pm.expect(data).to.have.property(field);",
+											"        pm.expect(data[field]).to.be.an('string');",
+											"    });",
+											"    pm.expect(data).to.have.property('deliveries');",
+											"    pm.expect(data.deliveries).to.be.an('array');",
+											"    pm.expect(data.deliveries.length).to.equal(1);",
+											"    data.deliveries.forEach(delivery => {",
+											"        [",
+											"            'id',",
+											"            'client_id',",
+											"            'product_name',",
+											"            'created_at'",
+											"        ].forEach(field => {",
+											"            pm.expect(delivery).to.have.property(field);",
+											"            pm.expect(delivery[field]).to.be.an('string');",
+											"        });",
+											"        [",
+											"            'deliveryman_id',",
+											"            'delivered_at'",
+											"        ].forEach(field => {",
+											"            pm.expect(delivery).to.have.property(field);",
+											"            pm.expect(delivery[field]).to.equal(null);",
+											"        });",
+											"    });",
+											"});",
+											"",
+											"pm.test('Client Deliveries: Return 200 And Schema Validation', function () {",
+											"    const response1 = pm.response;",
+											"    pm.expect(response1.code).to.equal(200);",
+											"    const body = JSON.parse(response1.text());",
+											"    [",
+											"        'id',",
+											"        'username'",
+											"    ].forEach(field => {",
+											"        pm.expect(body).to.have.property(field);",
+											"        pm.expect(body[field]).to.be.an('string');",
+											"    });",
+											"    pm.expect(body).to.have.property('deliveries');",
+											"    pm.expect(body.deliveries).to.be.an('array');",
+											"    pm.expect(body.deliveries.length).to.equal(1);",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"protocolProfileBehavior": {
+								"followRedirects": true,
+								"disableUrlEncoding": false,
+								"disableCookies": false
+							},
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{host}}/clients/deliveries",
+									"host": [
+										"{{host}}"
+									],
+									"path": [
+										"clients",
+										"deliveries"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Store",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test('Create Client Success: Returns 201 And Schema Validation', function () {",
+									"    const response1 = pm.response;",
+									"    pm.expect(response1.code).to.equal(201);",
+									"    const data = response1.json();",
+									"    [",
+									"        'id',",
+									"        'username',",
+									"        'password'",
+									"    ].forEach(field => {",
+									"        pm.expect(data).to.have.property(field);",
+									"        pm.expect(data[field]).to.be.an('string');",
+									"    });",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"followRedirects": true,
+						"disableUrlEncoding": false,
+						"disableCookies": false
+					},
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"username\": \"johndoe\",\n\t\"password\": \"123456\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}/clients",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"clients"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Auth",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test('Client: Return 200 And Schema Validation', function () {",
+									"    const response1 = pm.response;",
+									"    pm.expect(response1.code).to.equal(200);",
+									"    const data = response1.json();",
+									"    pm.expect(data).to.have.property('token');",
+									"    pm.expect(data.token).to.be.an('string');",
+									"",
+									"    pm.collectionVariables.set('token', token);",
+									"});",
+									"",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"followRedirects": true,
+						"disableUrlEncoding": false,
+						"disableCookies": false
+					},
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"username\": \"johndoe\",\n\t\"password\": \"123456\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}/clients/auth",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"clients",
+								"auth"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Deliveryman",
+			"item": [
+				{
+					"name": "Deliveries",
+					"item": [
+						{
+							"name": "Not Delivered",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test('Not Delivered: Return 200 And Schema Validation', function () {",
+											"    const response1 = pm.response;",
+											"    pm.expect(response1.code).to.equal(200);",
+											"    const data = response1.json();",
+											"    pm.expect(data).to.be.an('array');",
+											"    pm.expect(data.length).to.equal(1);",
+											"    data.forEach(delivery => {",
+											"        [",
+											"            'id',",
+											"            'client_id',",
+											"            'product_name',",
+											"            'created_at'",
+											"        ].forEach(field => {",
+											"            pm.expect(delivery).to.have.property(field);",
+											"            pm.expect(delivery[field]).to.be.an('string');",
+											"        });",
+											"        [",
+											"            'deliveryman_id',",
+											"            'delivered_at'",
+											"        ].forEach(field => {",
+											"            pm.expect(delivery).to.have.property(field);",
+											"            pm.expect(delivery[field]).to.equal(null);",
+											"        });",
+											"    });",
+											"",
+											"    const [{ id }] = data;",
+											"    pm.collectionVariables.set('delivery_id', id);",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"protocolProfileBehavior": {
+								"followRedirects": true,
+								"disableUrlEncoding": false,
+								"disableCookies": false
+							},
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{host}}/deliveries/not_delivered",
+									"host": [
+										"{{host}}"
+									],
+									"path": [
+										"deliveries",
+										"not_delivered"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Set Deliveryman",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test('Return 204', function () {",
+											"    const response1 = pm.response;",
+											"    pm.expect(response1.code).to.equal(204);",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"protocolProfileBehavior": {
+								"followRedirects": true,
+								"disableUrlEncoding": false,
+								"disableCookies": false
+							},
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "PATCH",
+								"header": [],
+								"url": {
+									"raw": "{{host}}/deliveries/{{delivery_id}}/set_deliveryman",
+									"host": [
+										"{{host}}"
+									],
+									"path": [
+										"deliveries",
+										"{{delivery_id}}",
+										"set_deliveryman"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Set As Delivered",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test('Return 204', function () {",
+											"    const response1 = pm.response;",
+											"    pm.expect(response1.code).to.equal(204);",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"protocolProfileBehavior": {
+								"followRedirects": true,
+								"disableUrlEncoding": false,
+								"disableCookies": false
+							},
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "PATCH",
+								"header": [],
+								"url": {
+									"raw": "{{host}}/deliveries/{{delivery_id}}/set_as_delivered",
+									"host": [
+										"{{host}}"
+									],
+									"path": [
+										"deliveries",
+										"{{delivery_id}}",
+										"set_as_delivered"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Index",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"const response = pm.response.json();\r",
+											"\r",
+											"if (Array.isArray(response) && response.length > 0) {\r",
+											"    const [{ id }] = response;\r",
+											"    pm.collectionVariables.set('delivery_id', id);\r",
+											"}"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"protocolProfileBehavior": {
+								"followRedirects": true,
+								"disableUrlEncoding": false,
+								"disableCookies": false
+							},
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{host}}/deliveryman/deliveries",
+									"host": [
+										"{{host}}"
+									],
+									"path": [
+										"deliveryman",
+										"deliveries"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Store",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test('Create Deliveryman Success: Returns 201 And Schema Validation', function () {",
+									"    const response1 = pm.response;",
+									"    pm.expect(response1.code).to.equal(201);",
+									"    const body = JSON.parse(response1.text());",
+									"    [",
+									"        'id',",
+									"        'username',",
+									"        'password'",
+									"    ].forEach(field => {",
+									"        pm.expect(body).to.have.property(field);",
+									"        pm.expect(body[field]).to.be.an('string');",
+									"    });",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"followRedirects": true,
+						"disableUrlEncoding": false,
+						"disableCookies": false
+					},
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"username\": \"janedoe\",\n\t\"password\": \"123456\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}/deliveryman",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"deliveryman"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Auth",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test('Deliveryman: Return 200 And Schema Validation', function () {",
+									"    const response1 = pm.response;",
+									"    pm.expect(response1.code).to.equal(200);",
+									"    const data = response1.json();",
+									"    pm.expect(data).to.have.property('token');",
+									"    pm.expect(data.token).to.be.an('string');",
+									"",
+									"    pm.collectionVariables.set('token', token);",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"followRedirects": true,
+						"disableUrlEncoding": false,
+						"disableCookies": false
+					},
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"username\": \"janedoe\",\n\t\"password\": \"123456\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}/deliveryman/auth",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"deliveryman",
+								"auth"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "host",
+			"value": "http://localhost:3333/v1"
+		},
+		{
+			"key": "token",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"key": "delivery_id",
+			"value": "",
+			"type": "string"
+		}
+	]
+}
