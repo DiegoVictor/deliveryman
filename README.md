@@ -8,7 +8,7 @@
 [![coverage](https://img.shields.io/codecov/c/gh/DiegoVictor/deliveryman?logo=codecov&style=flat-square)](https://codecov.io/gh/DiegoVictor/deliveryman)
 [![MIT License](https://img.shields.io/badge/license-MIT-green?style=flat-square)](https://raw.githubusercontent.com/DiegoVictor/deliveryman/main/LICENSE)
 [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat-square)](http://makeapullrequest.com)<br>
-[![Run in Insomnia}](https://insomnia.rest/images/run.svg)](https://insomnia.rest/run/?label=Deliveryman&uri=https%3A%2F%2Fraw.githubusercontent.com%2FDiegoVictor%2Fdeliveryman%2Fmaster%2FInsomnia_2024-12-11.json)
+[![Run in Insomnia}](https://insomnia.rest/images/run.svg)](https://insomnia.rest/run/?label=Deliveryman&uri=https%3A%2F%2Fraw.githubusercontent.com%2FDiegoVictor%2Fdeliveryman%2Fmaster%2FInsomnia_2024-12-13.json)
 
 Permit to register clients, deliverymen, deliveries and manage deliveries status (in progress, done, etc). The app has friendly errors, use JWT to logins, validation, also a simple versioning was made.
 
