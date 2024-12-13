@@ -56,7 +56,7 @@ jobs:
 
       - uses: kong/setup-inso@v1
         with:
-          inso-version: 3.5.0
+          inso-version: 10.1.1
 
       - name: Install dependecies
         run: npm ci
