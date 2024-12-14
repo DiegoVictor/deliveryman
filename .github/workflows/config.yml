@@ -80,4 +80,4 @@ jobs:
 
       - name: Run insomnia tests
         run: |
-          inso run test "Deliveryman" -w Insomnia_2024-12-13.json --env "UnitTest" --ci --verbose
+          inso run test "Deliveryman" -w Insomnia_2024-12-14.json --env "UnitTest" --ci --verbose
