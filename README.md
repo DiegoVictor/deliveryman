@@ -1,7 +1,8 @@
 # Deliveryman
 [![GitHub Workflow Status](https://img.shields.io/github/actions/workflow/status/DiegoVictor/deliveryman/config.yml?logo=github&style=flat-square)](https://github.com/DiegoVictor/deliveryman/actions)
+[![postgres](https://img.shields.io/badge/postgres-326690?style=flat-square&logo=postgresql&logoColor=white)](https://www.postgresql.org/)
 [![typescript](https://img.shields.io/badge/typescript-4.5.5-3178c6?style=flat-square&logo=typescript)](https://www.typescriptlang.org/)
-[![prisma](https://img.shields.io/badge/prisma-3.10.0-326690?style=flat-square&logo=prisma&logoColor=white)](https://www.prisma.io/)
+[![prisma](https://img.shields.io/badge/prisma-5.22.0-326690?style=flat-square&logo=prisma&logoColor=white)](https://www.prisma.io/)
 [![eslint](https://img.shields.io/badge/eslint-8.9.0-4b32c3?style=flat-square&logo=eslint)](https://eslint.org/)
 [![airbnb-style](https://flat.badgen.net/badge/style-guide/airbnb/ff5a5f?icon=airbnb)](https://github.com/airbnb/javascript)
 [![jest](https://img.shields.io/badge/jest-27.5.1-brightgreen?style=flat-square&logo=jest)](https://jestjs.io/)
