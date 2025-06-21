@@ -16,9 +16,9 @@ Permit to register clients, deliverymen, deliveries and manage deliveries status
 ## Table of Contents
 * [Installing](#installing)
   * [Configuring](#configuring)
+    * [.env](#env)
     * [Postgres](#postgres)
       * [Migrations](#migrations)
-    * [.env](#env)
 * [Usage](#usage)
   * [Error Handling](#error-handling)
     * [Errors Reference](#errors-reference)
@@ -46,6 +46,18 @@ The application use just one database: [Postgres](https://www.postgresql.org/). 
 $ docker-compose up -d
 ```
 
+### .env
+In this file you may configure your JWT settings, database connection, app's port and a url to documentation (this will be returned with error responses, see [error section](#error-handling)). Rename the `.env.example` in the root directory to `.env` then just update with your settings.
+
+|key|description|default
+|---|---|---
+|PORT|Port number where the app will run.|`3333`
+|JWT_CLIENTS_SECRET|A alphanumeric random string. Used to create signed tokens for clients logins.| -
+|JWT_DELIVERYMAN_SECRET|A alphanumeric random string. Used to create signed tokens for deliverymen logins.| -
+|JWT_EXPIRATION|How long time will be the token valid. See [jsonwebtoken](https://github.com/auth0/node-jsonwebtoken#usage) repo for more information.|`1d`
+|DATABASE_URL|Database url.|`postgresql://postgres:docker@localhost:5432/deliveryman?schema=public`
+|DOCS_URL|An url to docs where users can find more information about the app's internal code errors.|`https://github.com/DiegoVictor/deliveryman#errors-reference`
+
 ### Postgres
 Responsible to store all application data. If for any reason you would like to create a Postgres container instead of use `docker-compose`, you can do it by running the following command:
 ```
@@ -62,18 +74,6 @@ Or:
 $ yarn prisma migrate deploy
 ```
 > See more information on [migrate deploy](https://www.prisma.io/docs/reference/api-reference/command-reference#migrate-deploy).
-
-### .env
-In this file you may configure your JWT settings, database connection, app's port and a url to documentation (this will be returned with error responses, see [error section](#error-handling)). Rename the `.env.example` in the root directory to `.env` then just update with your settings.
-
-|key|description|default
-|---|---|---
-|PORT|Port number where the app will run.|`3333`
-|JWT_CLIENTS_SECRET|A alphanumeric random string. Used to create signed tokens for clients logins.| -
-|JWT_DELIVERYMAN_SECRET|A alphanumeric random string. Used to create signed tokens for deliverymen logins.| -
-|JWT_EXPIRATION|How long time will be the token valid. See [jsonwebtoken](https://github.com/auth0/node-jsonwebtoken#usage) repo for more information.|`1d`
-|DATABASE_URL|Database url.|`postgresql://postgres:docker@localhost:5432/deliveryman?schema=public`
-|DOCS_URL|An url to docs where users can find more information about the app's internal code errors.|`https://github.com/DiegoVictor/deliveryman#errors-reference`
 
 # Usage
 To start up the app run:
